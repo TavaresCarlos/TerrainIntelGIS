@@ -45,9 +45,11 @@ def save_file():
         df_2 = pd.read_csv(file, on_bad_lines='skip')
 
         aux = tratamento(df_2)
-        cluster = treinamento(aux)
+        cluster = list(treinamento(aux))
 
-        return str(cluster)
+        #return str(cluster)
+
+        return jsonify(cluster=str(cluster))
 
         #content = str(file.read())
         
@@ -82,9 +84,9 @@ def tratamento(df_2):
 	nascentes = df_2['Nascentes']
 	reserva_legal = df_2['Reserva Legal']
 	restinga = df_2['Restinga']
-	#servidao_administrativa = df_2['Servidão Administrativa']
+	servidao_administrativa = df_2['Servidao Administrativa']
 	restrito = df_2['Restrito']
-	#vegetacao_nativa = df_2['Vegetação Nativa']
+	vegetacao_nativa = df_2['Vegetacao Nativa']
 	vereda = df_2['Vereda']
 	                           
 	app_f = []
@@ -101,9 +103,9 @@ def tratamento(df_2):
 	nascentes_f = []
 	reserva_legal_f = []
 	restinga_f = []
-	#servidao_administrativa_f = []
+	servidao_administrativa_f = []
 	restrito_f = []
-	#vegetacao_nativa_f = []
+	vegetacao_nativa_f = []
 	vereda_f = []
 	                           
 	for i in app:
@@ -148,14 +150,14 @@ def tratamento(df_2):
 	for i in restinga:
 	    restinga_f.append(float(i))
 	                           
-	#for i in servidao_administrativa:
-	#   servidao_administrativa_f.append(float(i))
+	for i in servidao_administrativa:
+	   servidao_administrativa_f.append(float(i))
 	                           
 	for i in restrito:
 	    restrito_f.append(float(i))
 	                           
-	#for i in vegetacao_nativa:
-	#    vegetacao_nativa_f.append(float(i))
+	for i in vegetacao_nativa:
+	    vegetacao_nativa_f.append(float(i))
 	                           
 	for i in vereda:
 	    vereda_f.append(float(i))
