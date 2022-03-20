@@ -16,13 +16,46 @@ import json
 from scipy import stats as sts
 from sklearn.cluster import KMeans
 
+from werkzeug.utils import secure_filename
+
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route('/')
+app.config["UPLOAD_FOLDER"] = "static/"
+
+#@app.route('/')
 @cross_origin()
 
+@app.route('/')
+def upload_file():
+    return render_template('index.html')
+
+
+@app.route('/display', methods = ['GET', 'POST'])
+def save_file():
+    if request.method == 'POST':
+        f = request.files['file']
+        filename = secure_filename(f.filename)
+
+        f.save(app.config['UPLOAD_FOLDER'] + filename)
+
+        file = open(app.config['UPLOAD_FOLDER'] + filename,"r")
+
+        df_2 = pd.read_csv(file, on_bad_lines='skip')
+
+        aux = tratamento(df_2)
+        cluster = treinamento(aux)
+
+        return str(cluster)
+
+        #content = str(file.read())
+        
+        
+    return render_template('content.html', content=content) 
+
+
+'''
 def home():
 	df_2 = pd.read_csv('recursos-naturais-municipios.csv', on_bad_lines='skip')
 
@@ -30,6 +63,8 @@ def home():
 	cluster = treinamento(aux)
 
 	return str(cluster)
+
+'''
 
 #Tratamento dos dados númericos do CAR
 def tratamento(df_2):
@@ -47,9 +82,9 @@ def tratamento(df_2):
 	nascentes = df_2['Nascentes']
 	reserva_legal = df_2['Reserva Legal']
 	restinga = df_2['Restinga']
-	servidao_administrativa = df_2['Servidão Administrativa']
+	#servidao_administrativa = df_2['Servidão Administrativa']
 	restrito = df_2['Restrito']
-	vegetacao_nativa = df_2['Vegetação Nativa']
+	#vegetacao_nativa = df_2['Vegetação Nativa']
 	vereda = df_2['Vereda']
 	                           
 	app_f = []
@@ -66,9 +101,9 @@ def tratamento(df_2):
 	nascentes_f = []
 	reserva_legal_f = []
 	restinga_f = []
-	servidao_administrativa_f = []
+	#servidao_administrativa_f = []
 	restrito_f = []
-	vegetacao_nativa_f = []
+	#vegetacao_nativa_f = []
 	vereda_f = []
 	                           
 	for i in app:
@@ -113,14 +148,14 @@ def tratamento(df_2):
 	for i in restinga:
 	    restinga_f.append(float(i))
 	                           
-	for i in servidao_administrativa:
-	   servidao_administrativa_f.append(float(i))
+	#for i in servidao_administrativa:
+	#   servidao_administrativa_f.append(float(i))
 	                           
 	for i in restrito:
 	    restrito_f.append(float(i))
 	                           
-	for i in vegetacao_nativa:
-	    vegetacao_nativa_f.append(float(i))
+	#for i in vegetacao_nativa:
+	#    vegetacao_nativa_f.append(float(i))
 	                           
 	for i in vereda:
 	    vereda_f.append(float(i))
@@ -143,9 +178,9 @@ def tratamento(df_2):
 	    t.append(nascentes_f[i])
 	    t.append(reserva_legal_f[i])
 	    t.append(restinga_f[i])
-	    t.append(servidao_administrativa_f[i])
+	    #t.append(servidao_administrativa_f[i])
 	    t.append(restrito_f[i])
-	    t.append(vegetacao_nativa_f[i])
+	    #t.append(vegetacao_nativa_f[i])
 	    t.append(vereda_f[i]) 
 	    aux.append(t)
 
@@ -156,4 +191,4 @@ def treinamento(aux):
 	cluster = kmeans.fit_predict(aux)
 	return cluster
 
-app.run(host="localhost", port=int("3000"))
+app.run(host="localhost", port=3000, debug = True)
