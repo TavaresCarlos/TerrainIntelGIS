@@ -1,4 +1,4 @@
-"Nome do Município","População estimada(2021)","População censo(2010)","Densidade demografica(2010)","Salario medio mensal(2019)","Pessoal ocupado(2019)","Populacao ocupada(2019)","Percentual da populacao com renda de ate 1/2 salario(2010","Taxa ecolarizacao 6 a 14 anos(2010)","IDEB anos finais ensino fundamental(2019)","IDEB anos finais ensino fundamental(2019)","Matriculas ensino fundamental(2020)","Matriculas ensino medio(2020)","Docentes ensino fundamental(2020)","Docentes ensino medio(2020)","Numeros estabelecimentos ensino fundamental(2010)","Numeros estabelecimentos ensino medio(2020)","PIB per capita(2019)","Percentual receitas fontes externas(2015)","IDHM(2010)","Total receitas realizadas(2017)","Total receitas empenhadas(2017)","Moralidade infantil(2019)","Internacoes por diarreia(2016)","Estabelecimentos SUS(2009","Ara territorial(2021)","Esgotamento adequado(2010)","Arborização vias publicas(2010)","Urbanizacao vias publicas(2010)","Bioma"
+"Nome do Município","População estimada(2021)","População censo(2010)","Densidade demografica(2010)","Salario medio mensal(2019)","Pessoal ocupado(2019)","Populacao ocupada(2019)","Percentual da populacao com renda de ate meio salario(2010)","Taxa escolarizacao 6 a 14 anos(2010)","IDEB anos finais ensino fundamental(2019)","IDEB anos finais ensino fundamental(2019)","Matriculas ensino fundamental(2020)","Matriculas ensino medio(2020)","Docentes ensino fundamental(2020)","Docentes ensino medio(2020)","Numeros estabelecimentos ensino fundamental(2010)","Numeros estabelecimentos ensino medio(2020)","PIB per capita(2019)","Percentual receitas fontes externas(2015)","IDHM(2010)","Total receitas realizadas(2017)","Total receitas empenhadas(2017)","Mortalidade infantil(2019)","Internacoes por diarreia(2016)","Estabelecimentos SUS(2009)","Area territorial(2021)","Esgotamento adequado(2010)","Arborização vias publicas(2010)","Urbanizacao vias publicas(2010)","Bioma"
 "Belo Vale","7723","7536","20.59","1.8","1247","16.2","38.5","97.1","6.3","","932","250","68","18","10","1","24361.53","","0.655","45642.25","32123.19","10.75","0.8","5","365.923","48.2","67.7","27.8","Mata Atlântica"
 "Betim","450024","378089","1102.80","3.2","118718","27.0","33.7","98","6.1","5.1","54296","15721","2812","958","118","37","63882.75","71","0.749","1775733.39","1363402.09","13.06","0.1","73","343.884","86","74.3","33.4","Cerrado e Mata Atlântica"
 "Bonfim","6852","6818","22.59","1.6","770","11.2","36.8","98.5","5.6","5.1","674","229","44","19","4","1","14898.51","83","0.637","19095.87","19887.69","","","4","301.865","38.5","40.9","9.4","Mata Atlântica"
@@ -12,38 +12,3 @@
 "Cristiano Otoni","5161","5007","37.68","1.6","709","13.8","37.7","99.7","5.9","4.1","626","238","47","25","4","1","23797.23","91.4","0.695","16479.54","16002.80","14.29","1.5","2","132.872","69.8","60","36.6","Mata Atlântica"
 "Crucilândia","5072","4757","28.46","1.6","789","15.7","35.8","98.6","6.4","4.9","613","189","38","15","5","1","14449.58","91","0.651","18278.46","15431.33","18.87","0.4","2","167.164","59.4","37.9","2","Mata Atlântica"
 "Curvelo","81085","74219","22.50","1.6","19499","24.3","34.1","98.6","6.2","4.6","9720","3077","517","320","39","19","22624.78","78.8","0.713","157527.11","152470.86","12.06","0.3","36","3296.200","82.5","58.7","6.4","Cerrado"
-"Desterro de Entre Rios",
-"Entre Rios de Minas",
-"Esmeraldas",
-"Felixlândia",
-"Florestal",
-"Fortuna de Minas",
-"Ibirité",
-"Igarapé",
-"Inhaúma",
-"Itatiaiuçu",
-"Itaúna",
-"Itaverava",
-"Jeceaba",
-"Juatuba",
-"Lagoa Dourada",
-"Maravilhas",
-"Mario Campos",
-"Mateus Leme",
-"Moeda",
-"Ouro Branco",
-"Ouro Preto",
-"Papagaios",
-"Pará de Minas",
-"Paraopeba",
-"Pequi",
-"Piedade dos Gerais",
-"Pompéu",
-"Queluzito",
-"Resende Costa",
-"Rio Manso",
-"São Brás do Suaçuí",
-"São Joaquim de Bicas",
-"São José da Varginha",
-"Sarzedo",
-"Sete Lagoas",
