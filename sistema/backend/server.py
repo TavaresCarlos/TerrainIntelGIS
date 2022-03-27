@@ -13,6 +13,8 @@ from flask_cors import CORS, cross_origin
 import pandas as pd
 import json
 
+from sklearn import preprocessing
+
 from scipy import stats as sts
 from sklearn.cluster import KMeans
 
@@ -44,8 +46,12 @@ def save_file():
 
         df_2 = pd.read_csv(file, on_bad_lines='skip')
 
+        tratamento_dados_categoricos(df_2)
         aux = tratamento(df_2)
         
+        #n_cluster = gerando_valor_k(df_2)
+        #cluster = list(treinamento(aux, n_cluster))
+
         cluster = list(treinamento(aux))
         return jsonify(cluster=str(cluster))
         
@@ -65,7 +71,16 @@ def home():
 
 '''
 
-#(implementar) Tratar colunas com atributos do tipo string
+def tratamento_dados_categoricos(df_2):
+	#Modificando colunas string para número
+	for i in df_2:
+	    if df_2[i].dtype == 'object':
+	        le = preprocessing.LabelEncoder()
+	        a = le.fit(df_2[i])
+	        a = le.transform(df_2[i])
+	        df_2[i] = a
+
+#Tratamento dos dados númericos do CAR
 def tratamento(df_2): 
 	aux = [[]]
 	j = 0
@@ -97,3 +112,7 @@ def treinamento(aux):
 	return cluster
 
 app.run(host="localhost", port=3000, debug = True)
+
+'''
+IMPORTANTE: Posso trocar todos os NaN pelo valor 0 ?? (estudar isso)
+'''
