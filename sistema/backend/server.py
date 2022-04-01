@@ -20,10 +20,14 @@ from sklearn.cluster import KMeans
 
 from werkzeug.utils import secure_filename
 
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+#Pasta que vai ser salvo o histórico de arquivos upados
 app.config["UPLOAD_FOLDER"] = "static/"
 
 #@app.route('/')
@@ -37,39 +41,49 @@ def upload_file():
 @app.route('/display', methods = ['GET', 'POST'])
 def save_file():
     if request.method == 'POST':
+    	#Salva o aquivo upado dentro da pasta "/static" antes de realizar o treinamento
         f = request.files['file']
         filename = secure_filename(f.filename)
-
         f.save(app.config['UPLOAD_FOLDER'] + filename)
-
         file = open(app.config['UPLOAD_FOLDER'] + filename,"r")
 
-        df_2 = pd.read_csv(file, on_bad_lines='skip')
+        arquivo_treinamento = pd.read_csv(file, on_bad_lines='skip')
 
-        tratamento_dados_categoricos(df_2)
-        aux = tratamento(df_2)
+        tratamento_dados_categoricos(arquivo_treinamento)
+        aux = tratamento(arquivo_treinamento)
         
-        #n_cluster = gerando_valor_k(df_2)
-        #cluster = list(treinamento(aux, n_cluster))
+        n_cluster = gerando_valor_k(arquivo_treinamento)
+        cluster = list(treinamento(aux, n_cluster[0]))
 
-        cluster = list(treinamento(aux))
+        
+        #cluster = list(treinamento(aux))
         return jsonify(cluster=str(cluster))
         
-        return jsonify(cluster=str(aux))
+        #return jsonify(cluster=str(n_cluster[0]))
         
     return render_template('content.html', content=content) 
 
+def gerando_valor_k(df_2):
+	valores_silhouette_scores = []
 
-'''
-def home():
-	df_2 = pd.read_csv('recursos-naturais-municipios.csv', on_bad_lines='skip')
+	for i in range(2,15):
+	    km = KMeans(n_clusters = i, random_state = 42)
+	    km.fit_predict(df_2)
+	    score = silhouette_score(df_2, km.labels_, metric='euclidean')
+	    
+	    x = []
+	    x.append(i)
+	    x.append(score)
+	    valores_silhouette_scores.append(x)
 
-	aux = tratamento(df_2)
-	cluster = treinamento(aux)
+	aux = [0,0]
+	for i in range(len(valores_silhouette_scores)):
+		if valores_silhouette_scores[i][1] > aux[1]:
+			aux[0] = valores_silhouette_scores[i][0]
+			aux[1] = valores_silhouette_scores[i][1]
+	return aux
 
-	return str(cluster)
-
-'''
+	#return valores_silhouette_scores
 
 def tratamento_dados_categoricos(df_2):
 	#Modificando colunas string para número
@@ -106,8 +120,8 @@ def tratamento(df_2):
 
 	return dados
 
-def treinamento(aux):
-	kmeans = KMeans(n_clusters = 5, random_state = 0)
+def treinamento(aux, k):
+	kmeans = KMeans(n_clusters = k, random_state = 0)
 	cluster = kmeans.fit_predict(aux)
 	return cluster
 
