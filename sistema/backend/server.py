@@ -37,7 +37,29 @@ app.config["UPLOAD_FOLDER"] = "static/"
 def upload_file():
     return render_template('index.html')
 
+@app.route('/display', methods = ['GET', 'POST'])
+def save_file():
+    if request.method == 'POST':
+    	#Salva o aquivo upado dentro da pasta "/static" antes de realizar o treinamento
+        f = request.files['file']
+        filename = secure_filename(f.filename)
+        f.save(app.config['UPLOAD_FOLDER'] + filename)
+        file = open(app.config['UPLOAD_FOLDER'] + filename,"r")
 
+        arquivo_treinamento = pd.read_csv(file, on_bad_lines='skip')
+
+        a = []
+       	for i in arquivo_treinamento:
+       		a.append(i)
+
+        content = a
+       	
+
+        #content = arquivo_treinamento
+        
+    return render_template('content.html', content=content) 
+
+'''
 @app.route('/display', methods = ['GET', 'POST'])
 def save_file():
     if request.method == 'POST':
@@ -54,14 +76,13 @@ def save_file():
         
         n_cluster = gerando_valor_k(arquivo_treinamento)
         cluster = list(treinamento(aux, n_cluster[0]))
-
         
         #cluster = list(treinamento(aux))
         return jsonify(cluster=str(cluster))
-        
         #return jsonify(cluster=str(n_cluster[0]))
         
-    return render_template('content.html', content=content) 
+    return render_template('content.html', content=content)
+'''
 
 def gerando_valor_k(df_2):
 	valores_silhouette_scores = []
