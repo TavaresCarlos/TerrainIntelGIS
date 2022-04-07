@@ -1,0 +1,2 @@
+-Os dados faltantes "NaN" nessa pasta foram substituidos por zeros (0)
+(Pesquisar como tratar esses dados)
