@@ -37,6 +37,7 @@ app.config["UPLOAD_FOLDER"] = "static/"
 def upload_file():
     return render_template('index.html')
 
+'''
 @app.route('/display', methods = ['GET', 'POST'])
 def save_file():
     if request.method == 'POST':
@@ -58,8 +59,8 @@ def save_file():
         #content = arquivo_treinamento
         
     return render_template('content.html', content=content) 
-
 '''
+
 @app.route('/display', methods = ['GET', 'POST'])
 def save_file():
     if request.method == 'POST':
@@ -82,13 +83,13 @@ def save_file():
         #return jsonify(cluster=str(n_cluster[0]))
         
     return render_template('content.html', content=content)
-'''
+
 
 def gerando_valor_k(df_2):
 	valores_silhouette_scores = []
 
 	for i in range(2,15):
-	    km = KMeans(n_clusters = i, random_state = 42)
+	    km = KMeans(n_clusters = i, random_state = 42, init = 'k-means++')
 	    km.fit_predict(df_2)
 	    score = silhouette_score(df_2, km.labels_, metric='euclidean')
 	    
@@ -97,14 +98,24 @@ def gerando_valor_k(df_2):
 	    x.append(score)
 	    valores_silhouette_scores.append(x)
 
-	aux = [0,0]
-	for i in range(len(valores_silhouette_scores)):
-		if valores_silhouette_scores[i][1] > aux[1]:
-			aux[0] = valores_silhouette_scores[i][0]
-			aux[1] = valores_silhouette_scores[i][1]
-	return aux
-
-	#return valores_silhouette_scores
+	cont = 2
+	diferenca = []
+	for i in range(len(valores_silhouette_scores)+1):
+	    if i+1 < len(valores_silhouette_scores):
+	        delta = []
+	        cont = cont + 1
+	        delta.append(cont)
+	        #Subtração dos valores de score i+1 e i
+	        delta.append(valores_silhouette_scores[i][1]-valores_silhouette_scores[i+1][1])
+	        diferenca.append(delta)
+	
+	#Ordena o vetor de forma decrescente com base na diferença calculada
+	valorK = sorted(diferenca, key=lambda diferenca: diferenca[1], reverse=True)
+	
+	#O maior valor da diferença sempre vai ser o primeiro do vetor
+	#print(valorK[0])
+	
+	return valorK[0]
 
 def tratamento_dados_categoricos(df_2):
 	#Modificando colunas string para número
@@ -150,4 +161,5 @@ app.run(host="localhost", port=3000, debug = True)
 
 '''
 IMPORTANTE: Posso trocar todos os NaN pelo valor 0 ?? (estudar isso)
+Remover valores NaN dos arquivos
 '''
