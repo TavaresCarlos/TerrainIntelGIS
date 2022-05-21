@@ -72,19 +72,26 @@ def save_file():
 
         arquivo_treinamento = pd.read_csv(file, on_bad_lines='skip')
 
+        '''
+        #Função que retorna o nome de todos os municípios do arquivo de treinamento
+        nome_municipios = get_nome_municipios(arquivo_treinamento)
+
+        #Função que retorna o ponto central de todos os municípios do arquivo de treinamento
+        pontosCentrais = get_pontos_centrais(arquivo_treinamento)
+        '''
+
         tratamento_dados_categoricos(arquivo_treinamento)
         aux = tratamento(arquivo_treinamento)
         
         n_cluster = gerando_valor_k(arquivo_treinamento)
         cluster = list(treinamento(aux, n_cluster[0]))
-        
-        #cluster = list(treinamento(aux))
-        return jsonify(cluster=str(cluster))
-        #return jsonify(cluster=str(n_cluster[0]))
+
+        return jsonify(municípios=str(nome_municipios),n_cluster=str(n_cluster[0]),cluster=str(cluster))
         
     return render_template('content.html', content=content)
 
 
+#Função que calcula o valor ideal de k para o algoritmo KMeans
 def gerando_valor_k(df_2):
 	valores_silhouette_scores = []
 
