@@ -37,7 +37,6 @@ app.config["UPLOAD_FOLDER"] = "static/"
 def upload_file():
     return render_template('index.html')
 
-'''
 @app.route('/display', methods = ['GET', 'POST'])
 def save_file():
     if request.method == 'POST':
@@ -47,49 +46,39 @@ def save_file():
         f.save(app.config['UPLOAD_FOLDER'] + filename)
         file = open(app.config['UPLOAD_FOLDER'] + filename,"r")
 
-        arquivo_treinamento = pd.read_csv(file, on_bad_lines='skip')
+        arquivo = pd.read_csv(file, on_bad_lines='skip')
+ 
+        nome_municipios = get_nome_municipios(arquivo)
 
-        a = []
-       	for i in arquivo_treinamento:
-       		a.append(i)
-
-        content = a
-       	
-
-        #content = arquivo_treinamento
-        
-    return render_template('content.html', content=content) 
-'''
-
-@app.route('/display', methods = ['GET', 'POST'])
-def save_file():
-    if request.method == 'POST':
-    	#Salva o aquivo upado dentro da pasta "/static" antes de realizar o treinamento
-        f = request.files['file']
-        filename = secure_filename(f.filename)
-        f.save(app.config['UPLOAD_FOLDER'] + filename)
-        file = open(app.config['UPLOAD_FOLDER'] + filename,"r")
-
-        arquivo_treinamento = pd.read_csv(file, on_bad_lines='skip')
-
-        '''
-        #Função que retorna o nome de todos os municípios do arquivo de treinamento
-        nome_municipios = get_nome_municipios(arquivo_treinamento)
-
-        #Função que retorna o ponto central de todos os municípios do arquivo de treinamento
-        pontosCentrais = get_pontos_centrais(arquivo_treinamento)
+       	'''
+ 		#Determina o centroide de todos os clusters
+        pontosCentrais = get_pontos_centrais(arquivo)
         '''
 
-        tratamento_dados_categoricos(arquivo_treinamento)
-        aux = tratamento(arquivo_treinamento)
-        
-        n_cluster = gerando_valor_k(arquivo_treinamento)
-        cluster = list(treinamento(aux, n_cluster[0]))
+        arquivo_tratamento_dados_categoricos = tratamento_dados_categoricos(arquivo)
+        arquivo_tratamento_dados_numericos = tratamento(arquivo_tratamento_dados_categoricos)
+        arquivo_tratado = arquivo_tratamento_dados_numericos
+
+        n_cluster = gerando_valor_k(arquivo_tratado)
+        cluster = list(treinamento(arquivo_tratado, n_cluster[0]))
+
+        dicionario_municipio_cluster = map_municipio_cluster(nome_municipios, cluster)
 
         return jsonify(municípios=str(nome_municipios),n_cluster=str(n_cluster[0]),cluster=str(cluster))
         
     return render_template('content.html', content=content)
 
+#Função que retorna o ponto central de todos os municípios do arquivo de treinamento
+def map_municipio_cluster(nome_municipios, cluster):
+	return dict(zip(nome_municipios, cluster))
+
+#Função que retorna uma lista com o nome de todos os municipios do arquivo de treinamento
+def get_nome_municipios(arquivo_treinamento):
+	nome_munic = []
+	for i in arquivo_treinamento['Nome do Municipio']:
+		nome_munic.append(i)
+
+	return nome_munic
 
 #Função que calcula o valor ideal de k para o algoritmo KMeans
 def gerando_valor_k(df_2):
@@ -132,6 +121,7 @@ def tratamento_dados_categoricos(df_2):
 	        a = le.fit(df_2[i])
 	        a = le.transform(df_2[i])
 	        df_2[i] = a
+	return df_2
 
 #Tratamento dos dados númericos do CAR
 def tratamento(df_2): 
