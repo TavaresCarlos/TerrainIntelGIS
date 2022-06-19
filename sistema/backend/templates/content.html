@@ -12,13 +12,18 @@
 
 </head>
 <body>
-    <div id="mapa" style="width: 700px; height: 500px"></div>
+    <div id="mapa" style="width: 100%; height: 800px"></div>
 
     <script>
         var map = L.map('mapa').setView([-20.4375747,-44.0579882], 8);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        })
+
+        var world = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+            maxZoom: 21,
+            subdomains:['mt0','mt1','mt2','mt3']
         }).addTo(map);
 
         var coordenadas = [
@@ -75,16 +80,26 @@
         var cluster = {{content}};
 
         console.log(cluster)
-        
+
+        var iconG = L.icon ({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+        });
+        var iconR = L.icon ({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+        });
+        var iconY = L.icon ({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-gold.png',
+        });
+
         for(let i=0; i<coordenadas.length; i++) {
             if(cluster[i] === 0) {
-                L.marker(coordenadas[i]).addTo(map).bindPopup("cluster: 0");
+                L.marker(coordenadas[i], {icon: iconG}).addTo(map).bindPopup("cluster: 0");
             }
             if(cluster[i]  === 1) {
-                L.marker(coordenadas[i]).addTo(map).bindPopup("cluster: 1");
+                L.marker(coordenadas[i], {icon: iconR}).addTo(map).bindPopup("cluster: 1");
             }
             if(cluster[i]  === 2) {
-                L.marker(coordenadas[i]).addTo(map).bindPopup("cluster: 2");
+                L.marker(coordenadas[i], {icon: iconY}).addTo(map).bindPopup("cluster: 2");
             }
             if(cluster[i]  === 3) {
                 L.marker(coordenadas[i]).addTo(map).bindPopup("cluster: 3");
