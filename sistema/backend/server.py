@@ -64,8 +64,12 @@ def save_file():
 
         dicionario_municipio_cluster = map_municipio_cluster(nome_municipios, cluster)
 
-        return jsonify(municípios=str(nome_municipios),n_cluster=str(n_cluster[0]),cluster=str(cluster))
+        dados = jsonify(municípios=str(nome_municipios),n_cluster=str(n_cluster[0]),cluster=str(cluster))
         
+        t = str(cluster)
+        #return dados
+        return render_template('content.html', content=t)
+     
     return render_template('content.html', content=content)
 
 #Função que retorna o ponto central de todos os municípios do arquivo de treinamento
