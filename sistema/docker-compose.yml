@@ -6,15 +6,21 @@ services:
       - 5433:5432
 
   frontend:
-    image:
+    image: node:8.1
       ports:
         - 80:80
+      volumes:
+        - ./frontend:/frontend
 
   backend:
-    image:
+    image: instalar python
       ports:
         - 3000:3000
+      commands: bash -c "pip install flask && pip install -U flask-cors && pip ......"
+      volumes:
+        - ./backend:./backend
 
   geoserver:
     image:
     ports:
+        - 9000:9000
