@@ -35,7 +35,7 @@ app.config["UPLOAD_FOLDER"] = "static/"
 
 @app.route('/')
 def upload_file():
-    return render_template('index.html')
+	return render_template('index.html')
 
 @app.route('/display', methods = ['GET', 'POST'])
 def save_file():
@@ -46,7 +46,7 @@ def save_file():
         f.save(app.config['UPLOAD_FOLDER'] + filename)
         file = open(app.config['UPLOAD_FOLDER'] + filename,"r")
 
-        arquivo = pd.read_csv(file, on_bad_lines='skip')
+        arquivo = pd.read_csv(file)
  
         nome_municipios = get_nome_municipios(arquivo)
 
@@ -158,7 +158,7 @@ def treinamento(aux, k):
 	cluster = kmeans.fit_predict(aux)
 	return cluster
 
-app.run(host="localhost", port=3000, debug = True)
+app.run(host="0.0.0.0", port=3000, debug = True)
 
 '''
 IMPORTANTE: Posso trocar todos os NaN pelo valor 0 ?? (estudar isso)

@@ -7,15 +7,6 @@ services:
    ports:
     - 5433:5432
 
-  frontend:
-   image: node:8.1
-   ports:
-    - 8080:8080
-   volumes:
-    - ./frontend:/frontend
-   working_dir: /usr/src/app
-   command: bash -c "cd /frontend && npm install && node npm run dev"
-
   backend:
    image: python:3.6
    ports:

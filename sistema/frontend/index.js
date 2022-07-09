@@ -7,7 +7,9 @@ var app = express();
 app.use(cors());
 
 app.get('/', async (req, res) => {
-	res.send('Frontend');
+	alert("HELLO");
+
+	/*res.send('Frontend');
 	await axios.get('http://localhost:3000/display')
 	.then((res) => {
 		console.log("S")
@@ -15,8 +17,8 @@ app.get('/', async (req, res) => {
 	})
 	.catch((error) => {
 		console.log(error.response);
-	})
+	})*/
 });
 
-app.listen(8000)
+app.listen(8080)
 console.log("Servidor online")
