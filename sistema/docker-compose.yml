@@ -1,26 +1,26 @@
 version: '3'
 services:
   db:
-    image: postgres:13-alpine
-    ports:
-      - 5433:5432
+   image: postgres:9.6
+   environment:
+    - POSTGRES_HOST_AUTH_METHOD=trust
+   ports:
+    - 5433:5432
 
   frontend:
-    image: node:8.1
-      ports:
-        - 80:80
-      volumes:
-        - ./frontend:/frontend
+   image: node:8.1
+   ports:
+    - 8080:8080
+   volumes:
+    - ./frontend:/frontend
+   working_dir: /usr/src/app
+   command: bash -c "cd /frontend && npm install && node npm run dev"
 
   backend:
-    image: instalar python
-      ports:
-        - 3000:3000
-      commands: bash -c "pip install flask && pip install -U flask-cors && pip ......"
-      volumes:
-        - ./backend:./backend
-
-  geoserver:
-    image:
-    ports:
-        - 9000:9000
+   image: python:3.6
+   ports:
+    - 3000:3000
+   volumes:
+    - ./backend:/backend
+   working_dir: /backend
+   command: bash ./backend.sh
