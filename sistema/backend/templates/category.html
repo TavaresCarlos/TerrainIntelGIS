@@ -3,6 +3,13 @@
 	<title></title>
 </head>
 <body>
-	<h1>{{content}}</h1>
+	<p>Escolha quais as features para usar na clusterização dos dados:</p>
+	<form action="/action_page.php">
+		{% for attr in content %}
+		<input type="checkbox" id={{attr}} name={{attr}} value={{attr}}>
+			<label for={{attr}}>{{attr}}</label><br>
+		{% endfor %}
+		<input type="submit" value="Submit">
+	</form>
 </body>
 </html>

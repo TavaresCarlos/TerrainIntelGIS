@@ -37,6 +37,18 @@ app.config["UPLOAD_FOLDER"] = "static/"
 def upload_file():
 	return render_template('index.html')
 
+@app.route('/test', methods = ['GET', 'POST'])
+def upload():
+	if request.method == 'POST':
+		f = request.files['file']
+		filename = secure_filename(f.filename)
+		f.save(app.config['UPLOAD_FOLDER'] + filename)
+		file = open(app.config['UPLOAD_FOLDER'] + filename,"r")
+
+		arquivo = pd.read_csv(file)
+
+		return render_template('category.html', content=list(arquivo))
+
 @app.route('/display', methods = ['GET', 'POST'])
 def save_file():
     if request.method == 'POST':
