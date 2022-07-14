@@ -40,15 +40,29 @@ def upload_file():
 @app.route('/test', methods = ['GET', 'POST'])
 def upload():
 	if request.method == 'POST':
+		#Import the .csv file
 		f = request.files['file']
 		filename = secure_filename(f.filename)
 		f.save(app.config['UPLOAD_FOLDER'] + filename)
 		file = open(app.config['UPLOAD_FOLDER'] + filename,"r")
 
 		arquivo = pd.read_csv(file)
+		
+		global dicts
+		dicts = arquivo.to_dict()
+		return render_template('category.html', content=dicts)
 
-		return render_template('category.html', content=list(arquivo))
 
+@app.route('/display', methods = ['GET', 'POST'])
+def save_file():
+	if request.method == 'POST':
+		campos_selecionados = request.form
+		t = []
+		for i in campos_selecionados:
+			t.append(dicts[i])
+		return render_template('treinamento.html', content=list(t))
+
+'''
 @app.route('/display', methods = ['GET', 'POST'])
 def save_file():
     if request.method == 'POST':
@@ -62,10 +76,8 @@ def save_file():
  
         nome_municipios = get_nome_municipios(arquivo)
 
-       	'''
  		#Determina o centroide de todos os clusters
-        pontosCentrais = get_pontos_centrais(arquivo)
-        '''
+        #pontosCentrais = get_pontos_centrais(arquivo)
 
         arquivo_tratamento_dados_categoricos = tratamento_dados_categoricos(arquivo)
         arquivo_tratamento_dados_numericos = tratamento(arquivo_tratamento_dados_categoricos)
@@ -83,6 +95,7 @@ def save_file():
         return render_template('content.html', content=t)
      
     return render_template('content.html', content=content)
+'''
 
 #Função que retorna o ponto central de todos os municípios do arquivo de treinamento
 def map_municipio_cluster(nome_municipios, cluster):
