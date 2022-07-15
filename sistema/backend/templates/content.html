@@ -77,9 +77,7 @@
             [-19.45738,-44.2416695]
         ];
 
-        /*var cluster = {{content}};
-
-        console.log(cluster)*/
+        var cluster = {{content}};
 
         var iconG = L.icon ({
             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
@@ -95,7 +93,7 @@
             if(cluster[i] === 0) {
                 L.marker(coordenadas[i], {icon: iconG}).addTo(map).bindPopup("cluster: 0");
             }
-            if(cluster[i]  === 1) {
+            if(cluster[i] === 1) {
                 L.marker(coordenadas[i], {icon: iconR}).addTo(map).bindPopup("cluster: 1");
             }
             if(cluster[i]  === 2) {

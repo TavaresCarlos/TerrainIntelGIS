@@ -56,37 +56,30 @@ def upload():
 @app.route('/display', methods = ['GET', 'POST'])
 def save_file():
 	if request.method == 'POST':
-		campos_selecionados = request.form
-		t = []
-		for i in campos_selecionados:
-			t.append(dicts[i])
+		features_selecteds = request.form
 
-		a = teste(t)
-		#Trocar linha por colunas da matriz a
+		list_of_features = []
+		for value_of_feature in features_selecteds:
+			list_of_features.append(dicts[value_of_feature])
 
-		'''
-		a = [[  9.77075874,   3.27621022],
-	       [ -9.71349666,  11.27451802],
-	       [ -6.91330582,  -9.34755911],
-	       [-10.86185913, -10.75063497],
-	       [ -8.50038027,  -4.54370383]]
-	    '''
+		a = float_tratament(list_of_features)
 
-		#kmeans = KMeans(n_clusters = 5, random_state = 0)
-		#cluster = kmeans.fit_predict(a)
+		kmeans = KMeans(n_clusters = 4, random_state = 0)
+		cluster = kmeans.fit_predict(a)
 
-		return render_template('treinamento.html', content=str(a))
+		return render_template('content.html', content=list(cluster))
 
-def teste(t):
-	b = []
-	for i in t:
+def float_tratament(list_of_features):
+	new_list_of_atributes = []
+	for feature_dict in list_of_features:
 		aux = []
-		for j in i:
-			aux.append(float(j))
-		b.append(aux)
+		for value in feature_dict.values():
+			aux.append(float(value))
+		new_list_of_atributes.append(aux)
 
-	return b
+	change_matrix = list(map(list, zip(*new_list_of_atributes)))
 
+	return change_matrix
 
 '''
 @app.route('/display', methods = ['GET', 'POST'])
