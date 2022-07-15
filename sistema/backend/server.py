@@ -60,7 +60,33 @@ def save_file():
 		t = []
 		for i in campos_selecionados:
 			t.append(dicts[i])
-		return render_template('treinamento.html', content=list(t))
+
+		a = teste(t)
+		#Trocar linha por colunas da matriz a
+
+		'''
+		a = [[  9.77075874,   3.27621022],
+	       [ -9.71349666,  11.27451802],
+	       [ -6.91330582,  -9.34755911],
+	       [-10.86185913, -10.75063497],
+	       [ -8.50038027,  -4.54370383]]
+	    '''
+
+		#kmeans = KMeans(n_clusters = 5, random_state = 0)
+		#cluster = kmeans.fit_predict(a)
+
+		return render_template('treinamento.html', content=str(a))
+
+def teste(t):
+	b = []
+	for i in t:
+		aux = []
+		for j in i:
+			aux.append(float(j))
+		b.append(aux)
+
+	return b
+
 
 '''
 @app.route('/display', methods = ['GET', 'POST'])
