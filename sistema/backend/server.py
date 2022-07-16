@@ -126,6 +126,12 @@ def save_file():
     return render_template('content.html', content=content)
 '''
 
+'''
+#Clustering algorithms
+def k_means():
+def affinity_propagation:
+'''
+
 #Função que retorna o ponto central de todos os municípios do arquivo de treinamento
 def map_municipio_cluster(nome_municipios, cluster):
 	return dict(zip(nome_municipios, cluster))
