@@ -5,8 +5,6 @@
 <body>
 	<p>Escolha quais as features para usar na clusterização dos dados:</p>
 	<form action="/display" method = "POST" >
-		{{content}}
-
 
 		{% for attr in content %}
 		<input type="checkbox" id='{{attr}}' name='{{attr}}' value='{{attr}}'>

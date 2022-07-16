@@ -37,7 +37,7 @@ app.config["UPLOAD_FOLDER"] = "static/"
 def upload_file():
 	return render_template('index.html')
 
-@app.route('/test', methods = ['GET', 'POST'])
+@app.route('/features', methods = ['GET', 'POST'])
 def upload():
 	if request.method == 'POST':
 		#Import the .csv file
@@ -47,10 +47,15 @@ def upload():
 		file = open(app.config['UPLOAD_FOLDER'] + filename,"r")
 
 		arquivo = pd.read_csv(file)
-		
+
+		#List with name of all cities
+		cities_name = get_cities_name(arquivo);
+	
 		global dicts
 		dicts = arquivo.to_dict()
-		return render_template('category.html', content=dicts)
+
+		#return render_template('features.html', content=dicts)
+		return render_template('treinamento.html', content=str(cities_name))
 
 
 @app.route('/display', methods = ['GET', 'POST'])
@@ -64,10 +69,15 @@ def save_file():
 
 		a = float_tratament(list_of_features)
 
-		kmeans = KMeans(n_clusters = 4, random_state = 0)
-		cluster = kmeans.fit_predict(a)
+		#Centroid of all clusters generated
+		#Category data tratament
+		#Numeric data tratament
 
-		return render_template('content.html', content=list(cluster))
+		#kmeans = KMeans(n_clusters = 4, random_state = 0)
+		#cluster = kmeans.fit_predict(a)
+
+		return render_template('display-map.html', content=list(cluster))
+		#return render_template('treinamento.html', content=str(cities_name))
 
 def float_tratament(list_of_features):
 	new_list_of_atributes = []
@@ -120,13 +130,13 @@ def save_file():
 def map_municipio_cluster(nome_municipios, cluster):
 	return dict(zip(nome_municipios, cluster))
 
-#Função que retorna uma lista com o nome de todos os municipios do arquivo de treinamento
-def get_nome_municipios(arquivo_treinamento):
-	nome_munic = []
-	for i in arquivo_treinamento['Nome do Municipio']:
-		nome_munic.append(i)
+#Function return a list with name of all cities from the .csv file
+def get_cities_name(training_file):
+	names = []
+	for city in training_file['Nome do Municipio']:
+		names.append(city)
 
-	return nome_munic
+	return names
 
 #Função que calcula o valor ideal de k para o algoritmo KMeans
 def gerando_valor_k(df_2):
