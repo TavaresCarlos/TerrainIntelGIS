@@ -42,6 +42,7 @@ def upload():
 	if request.method == 'POST':
 		#Import the .csv file
 		f = request.files['file']
+
 		filename = secure_filename(f.filename)
 		f.save(app.config['UPLOAD_FOLDER'] + filename)
 		file = open(app.config['UPLOAD_FOLDER'] + filename,"r")
@@ -55,6 +56,8 @@ def upload():
 		dicts = arquivo.to_dict()
 
 		#return render_template('features.html', content=dicts)
+		
+		#File to tests
 		return render_template('treinamento.html', content=str(cities_name))
 
 
@@ -67,18 +70,24 @@ def save_file():
 		for value_of_feature in features_selecteds:
 			list_of_features.append(dicts[value_of_feature])
 
-		a = float_tratament(list_of_features)
+		file_float_tratament = float_tratament(list_of_features)
 
 		#Centroid of all clusters generated
 		#Category data tratament
 		#Numeric data tratament
 
-		#kmeans = KMeans(n_clusters = 4, random_state = 0)
-		#cluster = kmeans.fit_predict(a)
+		#Defining the k number for the k-means
+		number_k = defining_k_value(file_float_tratament)
+
+		#K-Means
+		cluster = k_means(file_float_tratament, number_k)
 
 		return render_template('display-map.html', content=list(cluster))
-		#return render_template('treinamento.html', content=str(cities_name))
+		
+		#File to tests
+		#return render_template('treinamento.html', content=str(number_k))
 
+#OK
 def float_tratament(list_of_features):
 	new_list_of_atributes = []
 	for feature_dict in list_of_features:
@@ -136,6 +145,7 @@ def affinity_propagation:
 def map_municipio_cluster(nome_municipios, cluster):
 	return dict(zip(nome_municipios, cluster))
 
+#OK
 #Function return a list with name of all cities from the .csv file
 def get_cities_name(training_file):
 	names = []
@@ -144,38 +154,42 @@ def get_cities_name(training_file):
 
 	return names
 
-#Função que calcula o valor ideal de k para o algoritmo KMeans
-def gerando_valor_k(df_2):
-	valores_silhouette_scores = []
+#OK
+#Define the ideal k value
+#Use the Silhouette Score for determine the intra-cluster distance
+def defining_k_value(file):
+	values_silhouette_scores = []
 
 	for i in range(2,15):
+		#Use k-means auxiliary 
 	    km = KMeans(n_clusters = i, random_state = 42, init = 'k-means++')
-	    km.fit_predict(df_2)
-	    score = silhouette_score(df_2, km.labels_, metric='euclidean')
+	    km.fit_predict(file)
+	    score = silhouette_score(file, km.labels_, metric='euclidean')
 	    
+	    #Store the k value used in this iteraction and the score calculated
 	    x = []
 	    x.append(i)
 	    x.append(score)
-	    valores_silhouette_scores.append(x)
+	    values_silhouette_scores.append(x)
 
 	cont = 2
-	diferenca = []
-	for i in range(len(valores_silhouette_scores)+1):
-	    if i+1 < len(valores_silhouette_scores):
+	variation = []
+
+	for i in range(len(values_silhouette_scores)+1):
+	    if i+1 < len(values_silhouette_scores):
 	        delta = []
 	        cont = cont + 1
 	        delta.append(cont)
-	        #Subtração dos valores de score i+1 e i
-	        delta.append(valores_silhouette_scores[i][1]-valores_silhouette_scores[i+1][1])
-	        diferenca.append(delta)
+
+	        #Variation between of score values from i+1 and i
+	        delta.append(values_silhouette_scores[i][1] - values_silhouette_scores[i+1][1])
+	        variation.append(delta) 
 	
-	#Ordena o vetor de forma decrescente com base na diferença calculada
-	valorK = sorted(diferenca, key=lambda diferenca: diferenca[1], reverse=True)
+	#Order this array decrescent using the variation defining
+	valueK = sorted(variation, key=lambda variation: variation[1], reverse=True)
 	
-	#O maior valor da diferença sempre vai ser o primeiro do vetor
-	#print(valorK[0])
-	
-	return valorK[0]
+	#Return only the k value
+	return valueK[0][0]
 
 def tratamento_dados_categoricos(df_2):
 	#Modificando colunas string para número
@@ -213,9 +227,10 @@ def tratamento(df_2):
 
 	return dados
 
-def treinamento(aux, k):
-	kmeans = KMeans(n_clusters = k, random_state = 0)
-	cluster = kmeans.fit_predict(aux)
+#OK
+def k_means(file, number_k):
+	kmeans = KMeans(n_clusters = number_k, random_state = 0)
+	cluster = kmeans.fit_predict(file)
 	return cluster
 
 app.run(host="0.0.0.0", port=3000, debug = True)
