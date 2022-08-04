@@ -19,19 +19,19 @@
 		var city_01 = aux.replace(/&#39;/g, '').replace('[','').replace(']','').replace(' ', '');
 		var cities = city_01.replace(/[áàãâä]/ui, 'a').replace(/[éèêë]/ui, 'e').replace(/[íìîï]/ui, 'i').replace(/[óòõôö]/ui, 'o').replace(/[úùûü]/ui, 'u').replace(/[ç]/ui, 'c').split(',');
 
-		cities.forEach((city) => {
+		/*cities.forEach((city) => {
 			fetch('http://nominatim.openstreetmap.org/search?q='+city+'&format=json&polygon=1&addressdetails=1')
 	        .then(res => res.json())
 	        .then((data) => {
 	            console.log(data[0].lat, data[0].lon);
 	        }).catch(err => console.error(err));
-		})
+		})*/
 
-		/*fetch('http://nominatim.openstreetmap.org/search?q=BeloVale&format=json&polygon=1&addressdetails=1')
+		fetch('http://nominatim.openstreetmap.org/search?q=Vicosa&format=json&polygon=1&addressdetails=1')
 	        .then(res => res.json())
 	        .then((data) => {
 	            console.log(data[0].lat, data[0].lon);
-	        }).catch(err => console.error(err));*/
+	        }).catch(err => console.error(err));
 		
 	</script>
 	
