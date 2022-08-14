@@ -5,14 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!--Leaflet-->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
 
     <title>Mapa</title>
 
 </head>
 <body>
-    <div id="mapa" style="width: 100%; height: 800px"></div>
+    <div class="container">
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+            <div class="card">
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+            <div class="card">
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+        <div class="col-8">
+            <div id="mapa" style="width: 100%; height: 98vh;"></div>
+        </div>
+    </div>
+    </div>
 
     <script>
         var map = L.map('mapa').setView([-20.4375747,-44.0579882], 8);
@@ -105,59 +128,9 @@
             }
         }
 
-        /*
-        L.marker([-20.4375747,-44.0579882]).addTo(map).bindPopup('Belo Vale');
-        L.marker([-19.9673078,-44.2011904]).addTo(map).bindPopup('Betim');
-        L.marker([-20.3142689,-44.20997910000001]).addTo(map).bindPopup('Bonfim');
-        L.marker([-20.1514752,-44.2010719]).addTo(map).bindPopup('Brumadinho');
-        L.marker([-19.5235616,-44.4563046]).addTo(map).bindPopup('Cachoeira da Prata');
-        L.marker([-19.3323588,44.4181786]).addTo(map).bindPopup('Caetanópolis');
-        L.marker([-20.8380202,-43.92460090000001]).addTo(map).bindPopup('Casa Grande');
-        L.marker([-20.4993469,-43.8613566]).addTo(map).bindPopup('Congonhas');
-        L.marker([-20.6639305,43.7850227]).addTo(map).bindPopup('Conselheiro Lafaiete');
-        L.marker([-19.9161508,-44.0808763]).addTo(map).bindPopup('Contagem');
-        L.marker([-20.8249342,-43.8124157]).addTo(map).bindPopup('Cristiano Otoni');
-        L.marker([-20.4034268,-44.3425754]).addTo(map).bindPopup('Crucilândia');
-        L.marker([-18.753199,-44.4306685]).addTo(map).bindPopup('Curvelo');
-        L.marker([-20.6604014,-44.3327715]).addTo(map).bindPopup('Desterro de Entre Rios');
-        L.marker([-20.7387451,-44.0579882]).addTo(map).bindPopup('Entre Rios de Minas');
-        L.marker([-19.7656001,-44.2857937]).addTo(map).bindPopup('Esmeraldas');
-        L.marker([-18.7135827,-44.92533539999999]).addTo(map).bindPopup('Felixlândia');
-        L.marker([-19.8680623,-44.4370606]).addTo(map).bindPopup('Florestal');
-        L.marker([-19.562964,-44.4480709]).addTo(map).bindPopup('Fortuna de Minas');
-        L.marker([-20.0256695,-44.0572964]).addTo(map).bindPopup('Ibirité"');
-        L.marker([-20.0711891,-44.2999506]).addTo(map).bindPopup('Igarapé');
-        L.marker([-19.4903208,-44.3938098]).addTo(map).bindPopup('Inhaúma');
-        L.marker([-20.2174463,-44.455935]).addTo(map).bindPopup('Itatiaiuçu');
-        L.marker([-20.0446857,-44.5878439]).addTo(map).bindPopup('Itaúna');
-        L.marker([-20.6707092,-43.6183335]).addTo(map).bindPopup('Itaverava');
-        L.marker([-20.537708,-44.03895540000001]).addTo(map).bindPopup('Jeceaba');
-        L.marker([-19.9433129,-44.34137459999999]).addTo(map).bindPopup('Juatuba');
-        L.marker([-20.8894314,-44.0579882]).addTo(map).bindPopup('Lagoa Dourada');
-        L.marker([-19.5081043,-44.6782933]).addTo(map).bindPopup('Maravilhas');
-        L.marker([-20.0698627,-44.1815176]).addTo(map).bindPopup('Mario Campos');
-        L.marker([-20.017643,-44.4370606]).addTo(map).bindPopup('Mateus Leme');
-        L.marker([-20.3314696,-44.0539299]).addTo(map).bindPopup('Moeda');
-        L.marker([-9.1622013,-37.3587137]).addTo(map).bindPopup('Ouro Branco');
-        L.marker([-20.3855743,-43.5035777]).addTo(map).bindPopup('Ouro Preto');
-        L.marker([-19.3501941,-44.6630541]).addTo(map).bindPopup('Papagaios');
-        L.marker([-19.8600249,-44.60758389999999]).addTo(map).bindPopup('Pará de Minas');
-        L.marker([-19.2784382,-44.4062327]).addTo(map).bindPopup('Paraopeba');
-        L.marker([-19.5980091,-44.6442629]).addTo(map).bindPopup('Pequi');
-        L.marker([-20.4704064,-44.22428619999999]).addTo(map).bindPopup('Piedade dos Gerais');
-        L.marker([-19.2236338,-45.0056798]).addTo(map).bindPopup('Pompéu');
-        L.marker([-20.7370051,-43.8864226]).addTo(map).bindPopup('Queluzito');
-        L.marker([-20.8158114,-44.2857937]).addTo(map).bindPopup('Resende Costa');
-        L.marker([-20.2670203,-44.3074982]).addTo(map).bindPopup('Rio Manso');
-        L.marker([-20.6372767,-43.9627492]).addTo(map).bindPopup('São Brás do Suaçuí');
-        L.marker([-20.0648255,-44.2573774]).addTo(map).bindPopup('São Joaquim de Bicas');
-        L.marker([-19.6960606,-44.5690225]).addTo(map).bindPopup('São José da Varginha');
-        L.marker([-20.0371483,-44.14501509999999]).addTo(map).bindPopup('Sarzedo');
-        L.marker([-19.45738,-44.2416695]).addTo(map).bindPopup('Sete Lagoas');
-        */
-
     </script>
 
-    {{content}}
+    <!--{{content}}-->
+
 </body>
 </html>
