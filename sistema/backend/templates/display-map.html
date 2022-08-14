@@ -26,6 +26,7 @@
             subdomains:['mt0','mt1','mt2','mt3']
         }).addTo(map);
 
+        //Pegar valores do banco de dados ou de outro arquivo .csv
         var coordenadas = [
             [-20.4375747,-44.0579882],
             [-19.9673078,-44.2011904],
@@ -77,7 +78,7 @@
             [-19.45738,-44.2416695]
         ];
 
-        var cluster = {{content}};
+        var cluster = {{ content[0] }};
 
         var iconG = L.icon ({
             iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
@@ -103,8 +104,6 @@
                 L.marker(coordenadas[i]).addTo(map).bindPopup("cluster: 3");
             }
         }
-
-
 
         /*
         L.marker([-20.4375747,-44.0579882]).addTo(map).bindPopup('Belo Vale');
@@ -156,7 +155,9 @@
         L.marker([-20.0371483,-44.14501509999999]).addTo(map).bindPopup('Sarzedo');
         L.marker([-19.45738,-44.2416695]).addTo(map).bindPopup('Sete Lagoas');
         */
+
     </script>
-    <!--<pre>{{content}}</pre>-->
+
+    {{content}}
 </body>
 </html>

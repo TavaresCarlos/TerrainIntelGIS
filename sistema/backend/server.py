@@ -12,6 +12,7 @@ from flask import Flask, request, render_template, jsonify, send_file
 from flask_cors import CORS, cross_origin
 import pandas as pd
 import json
+import statistics
 
 from sklearn import preprocessing
 
@@ -47,18 +48,20 @@ def upload():
 		f.save(app.config['UPLOAD_FOLDER'] + filename)
 		file = open(app.config['UPLOAD_FOLDER'] + filename,"r")
 
+		global arquivo
 		arquivo = pd.read_csv(file)
 
 		#List with name of all cities
-		cities_name = get_cities_name(arquivo);
+		global cities_name
+		cities_name =  get_cities_name(arquivo)
 	
 		global dicts
 		dicts = arquivo.to_dict()
 
-		#return render_template('features.html', content=dicts)
+		return render_template('features.html', content=dicts)
 		
 		#File to tests
-		return render_template('treinamento.html', content=str(cities_name))
+		#return render_template('treinamento.html', content=str(arquivo))
 
 
 @app.route('/display', methods = ['GET', 'POST'])
@@ -82,12 +85,88 @@ def save_file():
 		#K-Means
 		cluster = k_means(file_float_tratament, number_k)
 
-		return render_template('display-map.html', content=list(cluster))
+		array_cluster_cities = cluster_cities_generate(number_k, cities_name, cluster)
+		array_cluster_properties = cluster_properties_generate(number_k, file_float_tratament, cluster)
+
+		teste = []
+		for array_value in array_cluster_properties:
+			v = 0
+			for j in array_value:
+				'''
+				O valor adicionado em j define qual a propriedade que eu estou considerando
+				j=0 - primeira propriedade selecionda
+				j=1 - segunda propriedade selecionda
+				E assim por diante
+
+				VALIDAR OS VALORES DE MÉDIA RETORNADOS
+				A PROPRIEDADE MANGUEZAL GERA UM VALOR A MAIS NO NUMERO DE CLUSTERS
+				'''
+				v += j[0]
+
+			teste.append(v/len(array_value))
+
+
+		'''
+		g = [
+			cluster,
+			[number_k],
+			array_cluster_cities,
+			array_cluster_properties
+		]
+		'''
+
+		g = [
+			cluster,
+			[number_k],
+			array_cluster_cities,
+			array_cluster_properties,
+			teste
+		]
+
+		return render_template('display-map.html', content=list(g))
 		
 		#File to tests
-		#return render_template('treinamento.html', content=str(number_k))
+		#return render_template('treinamento.html', content=list())
 
-#OK
+#Associate properties values with your clustering generate
+def cluster_properties_generate(number_k, file_float_tratament, cluster):
+	array_cluster = []
+	for i in range(number_k):
+		aux = []
+		array_cluster.append(aux)
+	cont = 0
+	for i in cluster:
+		array_cluster[i].append(file_float_tratament[cont])
+		cont = cont + 1
+
+	pos = 0
+	for i in array_cluster:
+		if(len(i) == 0):
+			del array_cluster[pos]
+		pos += 1
+
+	return array_cluster
+
+#Associate each city with your clustering generate
+def cluster_cities_generate(number_k, cities_name, cluster):
+	array_cluster = []
+	for i in range(number_k):
+		aux = []
+		array_cluster.append(aux)
+
+	cont = 0
+	for i in cluster:
+		array_cluster[i].append(cities_name[cont])
+		cont = cont + 1
+
+	pos = 0
+	for i in array_cluster:
+		if(len(i) == 0):
+			del array_cluster[pos]
+		pos += 1
+
+	return array_cluster
+
 def float_tratament(list_of_features):
 	new_list_of_atributes = []
 	for feature_dict in list_of_features:
@@ -145,7 +224,6 @@ def affinity_propagation:
 def map_municipio_cluster(nome_municipios, cluster):
 	return dict(zip(nome_municipios, cluster))
 
-#OK
 #Function return a list with name of all cities from the .csv file
 def get_cities_name(training_file):
 	names = []
@@ -154,7 +232,6 @@ def get_cities_name(training_file):
 
 	return names
 
-#OK
 #Define the ideal k value
 #Use the Silhouette Score for determine the intra-cluster distance
 def defining_k_value(file):
@@ -227,11 +304,10 @@ def tratamento(df_2):
 
 	return dados
 
-#OK
 def k_means(file, number_k):
 	kmeans = KMeans(n_clusters = number_k, random_state = 0)
 	cluster = kmeans.fit_predict(file)
-	return cluster
+	return list(cluster)
 
 app.run(host="0.0.0.0", port=3000, debug = True)
 
