@@ -87,25 +87,8 @@ def save_file():
 
 		array_cluster_cities = cluster_cities_generate(number_k, cities_name, cluster)
 		array_cluster_properties = cluster_properties_generate(number_k, file_float_tratament, cluster)
-
-		teste = []
-		for array_value in array_cluster_properties:
-			v = 0
-			for j in array_value:
-				'''
-				O valor adicionado em j define qual a propriedade que eu estou considerando
-				j=0 - primeira propriedade selecionda
-				j=1 - segunda propriedade selecionda
-				E assim por diante
-
-				VALIDAR OS VALORES DE MÉDIA RETORNADOS
-				A PROPRIEDADE MANGUEZAL GERA UM VALOR A MAIS NO NUMERO DE CLUSTERS
-				'''
-				v += j[0]
-
-			teste.append(v/len(array_value))
-
-
+		array_cluster_statistics = cluster_statistics_generate(number_k, array_cluster_properties)
+		
 		'''
 		g = [
 			cluster,
@@ -120,13 +103,36 @@ def save_file():
 			[number_k],
 			array_cluster_cities,
 			array_cluster_properties,
-			teste
+			array_cluster_statistics
 		]
 
 		return render_template('display-map.html', content=list(g))
 		
 		#File to tests
 		#return render_template('treinamento.html', content=list())
+
+#
+def cluster_statistics_generate(number_k, array_cluster_properties):
+	array_cluster = []
+
+	for array_value in array_cluster_properties:
+		aux = []
+		for j in array_value:
+			'''
+			O valor adicionado em j define qual a propriedade que eu estou considerando
+			j=0 - primeira propriedade selecionda
+			j=1 - segunda propriedade selecionda
+			E assim por diante
+
+			VALIDAR OS VALORES DE MÉDIA RETORNADOS
+			A PROPRIEDADE MANGUEZAL GERA UM VALOR A MAIS NO NUMERO DE CLUSTERS
+			'''
+			aux.append(j[0])
+
+		#array_cluster.append(statistics.mean(aux))
+		array_cluster.append(statistics.variance(aux))
+
+	return array_cluster
 
 #Associate properties values with your clustering generate
 def cluster_properties_generate(number_k, file_float_tratament, cluster):
