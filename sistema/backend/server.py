@@ -103,13 +103,14 @@ def save_file():
 			[number_k],
 			array_cluster_cities,
 			array_cluster_properties,
-			array_cluster_statistics
+			array_cluster_statistics,
+			list(features_selecteds)
 		]
 
 		return render_template('display-map.html', content=list(g))
 		
 		#File to tests
-		#return render_template('treinamento.html', content=list())
+		#return render_template('treinamento.html', content=list(features_selecteds))
 
 #
 def cluster_statistics_generate(number_k, array_cluster_properties):
@@ -129,8 +130,8 @@ def cluster_statistics_generate(number_k, array_cluster_properties):
 			'''
 			aux.append(j[0])
 
-		#array_cluster.append(statistics.mean(aux))
-		array_cluster.append(statistics.variance(aux))
+		array_cluster.append(statistics.mean(aux))
+		#array_cluster.append(statistics.variance(aux))
 
 	return array_cluster
 

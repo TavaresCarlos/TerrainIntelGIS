@@ -23,13 +23,15 @@
             <div class="card">
                 <div id="grafico-01"></div>
                 <script>
+                    var features_selected = '{{content[5]}}';
+
                     Highcharts.chart('grafico-01', {
                         title: {
                             text: 'TESTE 01'
                         },
 
                         subtitle: {
-                            text: 'TESTE 02'
+                            text: features_selected
                         },
 
                         yAxis: {

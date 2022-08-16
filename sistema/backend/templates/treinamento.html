@@ -33,7 +33,13 @@
 	        .then((data) => {
 	            console.log(data[0].lat, data[0].lon);
 	        }).catch(err => console.error(err));*/
-		
+
+	    fetch('http://nominatim.openstreetmap.org/search?state=MinasGerais&format=json')
+	        .then(res => res.json())
+	        .then((data) => {
+	            console.log(data[0].lat, data[0].lon);
+	        }).catch(err => console.error(err));
+	
 	</script>
 	
 </body>
