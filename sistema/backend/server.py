@@ -89,15 +89,6 @@ def save_file():
 		array_cluster_properties = cluster_properties_generate(number_k, file_float_tratament, cluster)
 		array_cluster_statistics = cluster_statistics_generate(number_k, array_cluster_properties)
 		
-		'''
-		g = [
-			cluster,
-			[number_k],
-			array_cluster_cities,
-			array_cluster_properties
-		]
-		'''
-
 		g = [
 			cluster,
 			[number_k],
@@ -110,7 +101,7 @@ def save_file():
 		return render_template('display-map.html', content=list(g))
 		
 		#File to tests
-		#return render_template('treinamento.html', content=list(features_selecteds))
+		#return render_template('treinamento.html', content=array_cluster_statistics)
 
 #
 def cluster_statistics_generate(number_k, array_cluster_properties):
@@ -128,12 +119,15 @@ def cluster_statistics_generate(number_k, array_cluster_properties):
 			VALIDAR OS VALORES DE MÉDIA RETORNADOS
 			A PROPRIEDADE MANGUEZAL GERA UM VALOR A MAIS NO NUMERO DE CLUSTERS
 			'''
-			aux.append(j[0])
+			#aux.append(j[0])
+			for i in j:
+				aux.append(i)
 
 		array_cluster.append(statistics.mean(aux))
 		#array_cluster.append(statistics.variance(aux))
 
 	return array_cluster
+
 
 #Associate properties values with your clustering generate
 def cluster_properties_generate(number_k, file_float_tratament, cluster):
@@ -185,41 +179,6 @@ def float_tratament(list_of_features):
 	change_matrix = list(map(list, zip(*new_list_of_atributes)))
 
 	return change_matrix
-
-'''
-@app.route('/display', methods = ['GET', 'POST'])
-def save_file():
-    if request.method == 'POST':
-    	#Salva o aquivo upado dentro da pasta "/static" antes de realizar o treinamento
-        f = request.files['file']
-        filename = secure_filename(f.filename)
-        f.save(app.config['UPLOAD_FOLDER'] + filename)
-        file = open(app.config['UPLOAD_FOLDER'] + filename,"r")
-
-        arquivo = pd.read_csv(file)
- 
-        nome_municipios = get_nome_municipios(arquivo)
-
- 		#Determina o centroide de todos os clusters
-        #pontosCentrais = get_pontos_centrais(arquivo)
-
-        arquivo_tratamento_dados_categoricos = tratamento_dados_categoricos(arquivo)
-        arquivo_tratamento_dados_numericos = tratamento(arquivo_tratamento_dados_categoricos)
-        arquivo_tratado = arquivo_tratamento_dados_numericos
-
-        n_cluster = gerando_valor_k(arquivo_tratado)
-        cluster = list(treinamento(arquivo_tratado, n_cluster[0]))
-
-        dicionario_municipio_cluster = map_municipio_cluster(nome_municipios, cluster)
-
-        dados = jsonify(municípios=str(nome_municipios),n_cluster=str(n_cluster[0]),cluster=str(cluster))
-        
-        t = str(cluster)
-        #return dados
-        return render_template('content.html', content=t)
-     
-    return render_template('content.html', content=content)
-'''
 
 '''
 #Clustering algorithms
