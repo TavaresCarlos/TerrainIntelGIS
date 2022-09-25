@@ -89,6 +89,8 @@ def save_file():
 		array_cluster_properties = cluster_properties_generate(number_k, file_float_tratament, cluster)
 		array_cluster_statistics = cluster_statistics_generate(number_k, array_cluster_properties)
 		
+		#GRÁFICO LATERAL: GRÁFICO X E Y COM OS CLUSTERS GERADOS APÓS O PCA
+
 		g = [
 			cluster,
 			[number_k],
@@ -123,8 +125,11 @@ def cluster_statistics_generate(number_k, array_cluster_properties):
 			for i in j:
 				aux.append(i)
 
-		array_cluster.append(statistics.mean(aux))
+		#array_cluster.append(statistics.mean(aux))
 		#array_cluster.append(statistics.variance(aux))
+		
+		#Median from each cluster generate
+		array_cluster.append(statistics.median(aux))
 
 	return array_cluster
 

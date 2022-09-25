@@ -1,0 +1,15 @@
+Clusterização baseada em centróides
+-K-Means
+-Mini Batch K-Means
+
+Clusterização Baseada em Densidade
+-DBScan
+
+Clusterização Baseada em Distribuições
+-Gaussian Mixture
+
+Clusterização Hierárquica
+-Agglomerative Clustering
+-BIRCH
+
+Affinity Propagation
