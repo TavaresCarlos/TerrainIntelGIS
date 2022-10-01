@@ -1,3 +1,5 @@
+#Se um atributo tem outlier, remove o atributo todo da base
+
 #pip install flask
 #pip install -U flask-cors
 
