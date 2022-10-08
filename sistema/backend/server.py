@@ -12,17 +12,23 @@ send_file =
 
 from flask import Flask, request, render_template, jsonify, send_file
 from flask_cors import CORS, cross_origin
+
+#Libraries and packages to data manipulation
 import pandas as pd
+import numpy as np
 import json
 import statistics
 
-from sklearn import preprocessing
+#Libraries and packages to authentication
+from flask_sqlalchemy import SQLAlchemy
+import jwt
+import psycopg2
 
+#Libraries and packages to data mining
+from sklearn import preprocessing
 from scipy import stats as sts
 from sklearn.cluster import KMeans
-
 from werkzeug.utils import secure_filename
-
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
@@ -58,6 +64,7 @@ def upload():
 		cities_name =  get_cities_name(arquivo)
 	
 		global dicts
+
 		dicts = arquivo.to_dict()
 
 		return render_template('features.html', content=dicts)
@@ -87,15 +94,16 @@ def save_file():
 		#K-Means
 		cluster = k_means(file_float_tratament, number_k)
 
-		array_cluster_cities = cluster_cities_generate(number_k, cities_name, cluster)
-		array_cluster_properties = cluster_properties_generate(number_k, file_float_tratament, cluster)
+		array_cluster_cities = cluster_cities_generate(number_k, cities_name, cluster[0])
+		array_cluster_properties = cluster_properties_generate(number_k, file_float_tratament, cluster[0])
 		array_cluster_statistics = cluster_statistics_generate(number_k, array_cluster_properties)
 		
 		#GRÁFICO LATERAL: GRÁFICO X E Y COM OS CLUSTERS GERADOS APÓS O PCA
 
 		g = [
-			cluster,
-			[number_k],
+			cluster[0],
+			list(cluster[1]),
+			number_k,
 			array_cluster_cities,
 			array_cluster_properties,
 			array_cluster_statistics,
@@ -280,7 +288,8 @@ def tratamento(df_2):
 def k_means(file, number_k):
 	kmeans = KMeans(n_clusters = number_k, random_state = 0)
 	cluster = kmeans.fit_predict(file)
-	return list(cluster)
+	centroide = kmeans.cluster_centers_
+	return list(cluster), centroide
 
 app.run(host="0.0.0.0", port=3000, debug = True)
 
