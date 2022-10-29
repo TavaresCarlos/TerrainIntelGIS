@@ -12,6 +12,6 @@ services:
    ports:
     - 3000:3000
    volumes:
-    - ./backend:/backend
-   working_dir: /backend
+    - ./backend/flaskr:/backend/flaskr
+   working_dir: /backend/flaskr
    command: bash ./backend.sh
