@@ -1,1 +1,0 @@
-A motivação do trabalho é: desastres ambientais e como agrupar cidades semelhantes para planejamento financeiro. Vocês propõem a utilização do K-Means.
