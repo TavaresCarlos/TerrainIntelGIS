@@ -4,6 +4,10 @@ services:
    image: postgres:9.6
    environment:
     - POSTGRES_HOST_AUTH_METHOD=trust
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=
+    - POSTGRES_DB=postgres-mestrado
+
    ports:
     - 5433:5432
 

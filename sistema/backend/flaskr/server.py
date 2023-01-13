@@ -44,7 +44,20 @@ app.config["UPLOAD_FOLDER"] = "static/"
 
 @app.route('/')
 def upload_file():
-	return render_template('index.html')
+	return render_template('home.html')
+
+@app.route('/conexaoBanco')
+def conexao():
+	con = psycopg2.connect(host='172.17.0.0', port='5433', user='postgres', password='', dbname='postgres-mestrado',)
+	cur = con.cursor()
+	sql = 'select * from usuario'
+	cur.execute(sql)
+	con.commit()
+	recset = cur.fetchall()
+	con.close()
+
+	return recset
+
 
 @app.route('/features', methods = ['GET', 'POST'])
 def upload():
