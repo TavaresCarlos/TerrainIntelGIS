@@ -30,151 +30,22 @@
     <div class="row">
         <div class="col-4">
             <div class="card">
-                <div id="descricao">
+                <div id="descricao" style="overflow: scroll; height: 80vh;" >
                     <!--Para cada agrupamento-->
                     {% for i in range(content[2]) %}
                         <p><strong>Agrupamento: {{i}} </strong></p>
                         <!--Para cada atributo selecionado-->
                         {% for p in range(content[6]|length) %}
-                        <p> {{content[6][p]}} <p>
-                        <p> {{content[1][i][p]}} </p>
+                            {{ content[6][p] }}: {{ content[1][i][p] | round(2) }}
+                            <br>
+                        
+
 
                         {% endfor %}
                     {% endfor %}
 
                 </div>
-            </div>
-
-                <!--
-                <div id="grafico-01"></div>
-                <script>
-                    var features_selected = '{{content[5]}}';
-
-                    Highcharts.chart('grafico-01', {
-                        title: {
-                            text: 'Mediana dos valores encontrados'
-                        },
-
-                        subtitle: {
-                            text: 'Propriedades selecionadas: ' + features_selected
-                        },
-
-                        yAxis: {
-                            title: {
-                                text: 'Valor médio calculado'
-                            }
-                        },
-
-                        xAxis: {
-                            title: {
-                                text: 'Agrupamento gerado'
-                            }
-                        },
-
-                        legend: {
-                            layout: 'vertical',
-                            align: 'right',
-                            verticalAlign: 'middle'
-                        },
-
-                        plotOptions: {
-                            series: {
-                                label: {
-                                    connectorAllowed: false
-                                },
-                                pointStart: 1
-                            }
-                        },
-
-                        series: [{
-                            data:{{content[4]}}
-                        }],
-
-                        responsive: {
-                            rules: [{
-                                condition: {
-                                    maxWidth: 500
-                                },
-                                chartOptions: {
-                                    legend: {
-                                        layout: 'horizontal',
-                                        align: 'center',
-                                        verticalAlign: 'bottom'
-                                    }
-                                }
-                            }]
-                        }
-
-                    });
-                </script>
-            -->
-            <div class="card">
-                <div id="grafico-02">
-                    <script>
-                    var features_selected = '{{content[6]}}';
-
-                    Highcharts.chart('grafico-02', {
-                        title: {
-                            text: 'TESTE 01'
-                        },
-
-                        subtitle: {
-                            text: features_selected
-                        },
-
-                        yAxis: {
-                            title: {
-                                text: 'Média dos valores calculados para cada agrupamento gerado'
-                            }
-                        },
-
-                        xAxis: {
-                            title: {
-                                text: 'Número do agrupamento gerado'
-                            }
-                        },
-
-                        legend: {
-                            layout: 'vertical',
-                            align: 'right',
-                            verticalAlign: 'middle'
-                        },
-
-                        plotOptions: {
-                            series: {
-                                label: {
-                                    connectorAllowed: false
-                                },
-                                pointStart: 1
-                            }
-                        },
-
-                        series: [{
-                            data:{{content[4]}}
-                        }],
-
-                        responsive: {
-                            rules: [{
-                                condition: {
-                                    maxWidth: 500
-                                },
-                                chartOptions: {
-                                    legend: {
-                                        layout: 'horizontal',
-                                        align: 'center',
-                                        verticalAlign: 'bottom'
-                                    }
-                                }
-                            }]
-                        }
-
-                    });
-                </script>
-                </div>
-            </div>
-            <div class="card">
-
-            </div>
+            </div>    
         </div>
         <div class="col-8">
             <div id="mapa"></div>

@@ -46,17 +46,9 @@ app.config["UPLOAD_FOLDER"] = "static/"
 def upload_file():
 	return render_template('home.html')
 
-@app.route('/conexaoBanco')
-def conexao():
-	con = psycopg2.connect(host='172.17.0.0', port='5433', user='postgres', password='', dbname='postgres-mestrado',)
-	cur = con.cursor()
-	sql = 'select * from usuario'
-	cur.execute(sql)
-	con.commit()
-	recset = cur.fetchall()
-	con.close()
-
-	return recset
+@app.route('/index', methods = ['POST'])
+def index():
+	return render_template('index.html')
 
 
 @app.route('/features', methods = ['GET', 'POST'])
@@ -106,6 +98,8 @@ def save_file():
 
 		#K-Means
 		cluster = k_means(file_float_tratament, number_k)
+
+		
 
 		array_cluster_cities = cluster_cities_generate(number_k, cities_name, cluster[0])
 		array_cluster_properties = cluster_properties_generate(number_k, file_float_tratament, cluster[0])
