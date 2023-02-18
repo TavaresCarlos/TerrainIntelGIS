@@ -10,7 +10,7 @@
 
 <h3>Arquitetura</h3>
 <p>A arquiteutra do sistema proposto segue o diagrama mostrado na Figura seguinte.</p>
-<img src="./imagens-gerais/arquitetura-geral-docker-publico.png">
+<img src="./imagens-gerais/arquitetura-geral.jpg">
 <p>O sistema como um todo é dividido em dois módulo: o primeiro contém o <i>frontend</i> e o <i>backend</i> da aplicação, assim como o banco de dados responsável pela gestão dos usuários e demais funcionalidades. Enquanto isso, no segundo módulo há o servidor de mapas juntamente com o banco de dados responsável por sua alimentação.</p>
 
 <h3>Tecnologias Utilizadas</h3>
