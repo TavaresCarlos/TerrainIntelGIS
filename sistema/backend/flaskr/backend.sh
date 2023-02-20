@@ -1,5 +1,7 @@
 #!/bin/sh
 
+#Não pode ~saltar linha depois do último comando
+
 pip install flask
 pip install -U flask-cors
 

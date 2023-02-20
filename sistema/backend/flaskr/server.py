@@ -20,8 +20,8 @@ import json
 import statistics
 
 #Libraries and packages to authentication
-from flask_sqlalchemy import SQLAlchemy
-import jwt
+#from flask_sqlalchemy import SQLAlchemy
+#import jwt
 import psycopg2
 
 #Libraries and packages to data mining
