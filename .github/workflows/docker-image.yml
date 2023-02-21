@@ -12,6 +12,16 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+     backend:
+     image: python:3.6
+     ports:
+      - 3000:3000
+     volumes:
+      - ./backend/flaskr:/backend/flaskr
+     working_dir: /backend/flaskr
+     command: bash ./backend.sh
+
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
