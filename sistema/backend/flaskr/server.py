@@ -99,8 +99,6 @@ def save_file():
 		#K-Means
 		cluster = k_means(file_float_tratament, number_k)
 
-		
-
 		array_cluster_cities = cluster_cities_generate(number_k, cities_name, cluster[0])
 		array_cluster_properties = cluster_properties_generate(number_k, file_float_tratament, cluster[0])
 		array_cluster_statistics = cluster_statistics_generate(number_k, array_cluster_properties)
