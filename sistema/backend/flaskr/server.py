@@ -61,6 +61,13 @@ def upload():
 		f.save(app.config['UPLOAD_FOLDER'] + filename)
 		file = open(app.config['UPLOAD_FOLDER'] + filename,"r")
 
+		global informarK
+		informarK = request.form['informarK']
+		
+		if informarK == 'sim':
+			global valorK
+			valorK = int(request.form['valorK'])
+
 		global arquivo
 		arquivo = pd.read_csv(file)
 
@@ -94,7 +101,10 @@ def save_file():
 		#Numeric data tratament
 
 		#Defining the k number for the k-means
-		number_k = defining_k_value(file_float_tratament)
+		if informarK == 'sim':
+			number_k = valorK
+		else:
+			number_k = defining_k_value(file_float_tratament)
 
 		#K-Means
 		cluster = k_means(file_float_tratament, number_k)
@@ -112,7 +122,7 @@ def save_file():
 			array_cluster_cities,
 			array_cluster_properties,
 			array_cluster_statistics,
-			list(features_selecteds)
+			list(features_selecteds),
 		]
 
 		return render_template('display-map.html', content=list(g))
