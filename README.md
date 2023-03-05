@@ -19,7 +19,6 @@
   <li>HTML</li>
   <li>CSS</li>
   <li>Javascript</li>
-  <li>Leaflet</li>
 </ol>
 <p><i>Backend</i></p>
 <ol>
