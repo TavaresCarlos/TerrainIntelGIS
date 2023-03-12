@@ -10,7 +10,7 @@ jsonify =
 send_file = 
 '''
 
-from flask import Flask, request, render_template, jsonify, send_file
+from flask import Flask, request, render_template, jsonify, send_file, url_for, make_response
 from flask_cors import CORS, cross_origin
 
 #Libraries and packages to data manipulation
@@ -31,6 +31,8 @@ from sklearn.cluster import KMeans
 from werkzeug.utils import secure_filename
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
+
+import csv
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -100,6 +102,8 @@ def save_file():
 		#Category data tratament
 		#Numeric data tratament
 
+		global number_k
+
 		#Defining the k number for the k-means
 		if informarK == 'sim':
 			number_k = valorK
@@ -108,6 +112,10 @@ def save_file():
 
 		#K-Means
 		cluster = k_means(file_float_tratament, number_k)
+
+		global array_cluster_cities
+		global array_cluster_statistics
+		global array_cluster_properties
 
 		array_cluster_cities = cluster_cities_generate(number_k, cities_name, cluster[0])
 		array_cluster_properties = cluster_properties_generate(number_k, file_float_tratament, cluster[0])
@@ -129,6 +137,17 @@ def save_file():
 		
 		#File to tests
 		#return render_template('treinamento.html', content=array_cluster_statistics)
+
+@app.route('/gerarRelatorio', methods = ['POST'])
+def gerarRelatorio():
+	with open('./relatorio.csv', 'w') as csvfile:
+		writer = csv.writer(csvfile, delimiter=',')
+		writer.writerow(['Agrupamento', 'Média', 'Cidades'])
+
+		for i in range(number_k):
+			writer.writerow([i,array_cluster_statistics[i], array_cluster_cities[i]])
+
+	return "ok"
 
 #
 def cluster_statistics_generate(number_k, array_cluster_properties):

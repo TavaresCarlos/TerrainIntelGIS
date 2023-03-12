@@ -1,17 +1,61 @@
-<html>
+<!DOCTYPE html>
 <head>
-	<title></title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!--CDN Vue Framework-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+    <!--Meu CSS-->
+    <link rel="stylesheet" href="../static/css/global.css">
+   
+
+    <title>TerrainIntelGIS</title>
 </head>
 <body>
-	<p>Escolha quais as features para usar na clusterização dos dados:</p>
-	<form action="/display" method = "POST" >
+    <div id="app">
+        <div class="row">
+            <div class="col-2"></div>
+                <div class="col-8" style="border: 1px solid black;">
+     
+                    <nav class="navbar navbar-expand-lg bg-light">
+                        <div class="container-fluid">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                                <a class="navbar-brand" href="#">{{nomeSistema}}</a>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline-success">Logout</button>
+                    </nav>
 
-		{% for attr in content %}
-		<input type="checkbox" id='{{attr}}' name='{{attr}}' value='{{attr}}'>
-			<label for='{{attr}}'>{{attr}}</label><br>
-		{% endfor %}
-		<input type="submit" value="Submit">
-		
-	</form>
+                    <p>Escolha quais serão os atributos utilizados para o agrupamento dos dados:</p>
+					<form action="/display" method = "POST">
+
+						{% for attr in content %}
+						<input type="checkbox" id='{{attr}}' name='{{attr}}' value='{{attr}}'>
+							<label for='{{attr}}'>{{attr}}</label><br>
+						{% endfor %}
+						<input type="submit" value="Submit">
+					</form>
+                </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                nomeSistema: "TerrainIntelGIS",
+                mostrar: true,
+            }
+        })
+    </script>
 </body>
 </html>
