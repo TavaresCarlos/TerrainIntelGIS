@@ -46,17 +46,20 @@
         <div class="col-2">
             <div class="card">
                 <div id="descricao" style="overflow: scroll; height: 80vh; left: 10%;">
+                    <ul>
                     <!--Para cada agrupamento-->
                     {% for i in range(content[2]) %}
                         <p><strong>Agrupamento: {{i}} </strong></p>
                         <!--Para cada atributo selecionado-->
                         {% for p in range(content[6]|length) %}
-                            {{ content[6][p] }}: {{ content[1][i][p] | round(2) }}
+                            <!--Property: Value-->
+                            <li>{{ content[6][p] }}: {{ content[1][i][p] | round(2) }}</li>
+                            <li>Desvio-Padrão: {{ content[5][i] | round(2) }}</li>
                             <br>
 
                         {% endfor %}
                     {% endfor %}
-
+                    </ul>
                 </div>
             </div>    
         </div>

@@ -130,7 +130,7 @@ def save_file():
 			array_cluster_cities,
 			array_cluster_properties,
 			array_cluster_statistics,
-			list(features_selecteds),
+			list(features_selecteds)
 		]
 
 		return render_template('display-map.html', content=list(g))
@@ -165,18 +165,14 @@ def cluster_statistics_generate(number_k, array_cluster_properties):
 			VALIDAR OS VALORES DE MÉDIA RETORNADOS
 			A PROPRIEDADE MANGUEZAL GERA UM VALOR A MAIS NO NUMERO DE CLUSTERS
 			'''
-			#aux.append(j[0])
+			#aux.append(j)
 			for i in j:
 				aux.append(i)
 
-		#array_cluster.append(statistics.mean(aux))
-		#array_cluster.append(statistics.variance(aux))
-		
-		#Median from each cluster generate
-		array_cluster.append(statistics.median(aux))
+		#array_cluster.append(statistics.median(aux))
+		array_cluster.append(statistics.pstdev(aux))
 
 	return array_cluster
-
 
 #Associate properties values with your clustering generate
 def cluster_properties_generate(number_k, file_float_tratament, cluster):
