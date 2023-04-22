@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!--Configuração-->
+    <script src="../static/conf/edit.js"></script>
+
     <!--Leaflet-->
     <link rel="stylesheet" href="../static/css/leaflet/leaflet.css" crossorigin="" />
     <script src="../static/js/leaflet/leaflet.js"></script>
@@ -52,7 +55,7 @@
     <div class="row" style="margin-left: 0.5%;">
         <div class="col-10">
             <div id="mapa">
-                <div id="agrupamentos" style="position: absolute; z-index: 9999; width: 300px; height: 0px;left: 70px; top: 85px; background-color: #FFFFFF; overflow-y: scroll;"> 
+                <div id="agrupamentos"> 
                     <ul>
                     <!--Para cada agrupamento-->
                     {% for i in range(content[2]) %}
@@ -67,7 +70,7 @@
                     {% endfor %}
                     </ul>
                 </div>
-                <div id="cidadesRelacao" style="position: absolute; z-index: 9999; width: 400px; height: 0px;left: 70px; top: 85px; background-color: #FFFFFF; overflow-y: scroll;"> 
+                <div id="cidadesRelacao"> 
                     <p><strong>AGRUPAMENTOS FORMADOS:</strong></p>
                     {% for c in content[3] %}
                         <p>{{ c }}</p>
@@ -77,7 +80,6 @@
         </div>
         <div class="col-2">
             <div id="">
-                <p>oi</p>
                 <form action="/gerarRelatorio" method="POST">
                     <button class="btn btn-outline-success">Gerar Relatório CSV</button>
                 </form>
@@ -92,7 +94,7 @@
 
 
     <script>
-        var map = L.map('mapa').setView([-20.4375747,-44.0579882], 8);
+        var map = L.map('mapa').setView([mapa.long, mapa.lat], mapa.zoom);
 
        //Camadas-bases
        const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -139,7 +141,7 @@
                     }
                 }, {
                     stateName: 'visualizacao-off',
-                    icon:      'fa-university',
+                    icon:      'fa-tree',
                     title:     'Visualização dos Agrupamentos Formados',
                     onClick: function(btn, map) {
                         document.getElementById("agrupamentos").style.height = "0px";
@@ -155,15 +157,15 @@
             states: [{
                     stateName: 'cidades-on',        
                     icon:      'fa-tree',               
-                    title:     'zoom to a forest',      
+                    title:     'Visualização das Cidades de Cada Agrupamento',      
                     onClick: function(btn, map) {       
                         document.getElementById("cidadesRelacao").style.height = "400px";
                         btn.state('cidades-off');
                     }
                 }, {
                     stateName: 'cidades-off',
-                    icon:      'fa-university',
-                    title:     'zoom to a school',
+                    icon:      'fa-tree',
+                    title:     'Visualização das Cidades de Cada Agrupamento',
                     onClick: function(btn, map) {
                         document.getElementById("cidadesRelacao").style.height = "0px";
                         btn.state('cidades-on');
@@ -172,61 +174,9 @@
         });
 
         cidadesAgrupamento.addTo(map);
+
+        const coordenadas = coordinates;
         
-
-
-        //Pegar valores do banco de dados ou de outro arquivo .csv
-        var coordenadas = [
-            [-20.407778,-44.024167],
-            [-19.968056,-44.198333],
-            [-20.3142689,-44.20997910000001],
-            [-20.1514752,-44.2010719],
-            [-19.5235616,-44.4563046],
-            [-19.2947496,-44.4138386], 
-            [-20.8380202,-43.92460090000001],
-            [-20.4993469,-43.8613566],
-            [-20.6639305,-43.7850227],
-            [-19.9161508,-44.0808763],
-            [-20.8249342,-43.8124157],
-            [-20.4034268,-44.3425754],
-            [-18.753199,-44.4306685],
-            [-20.6604014,-44.3327715],
-            [-20.670834,-44.065556],
-            [-19.7656001,-44.2857937],
-            [-18.7573983,-44.8991465],
-            [-19.8680623,-44.4370606],
-            [-19.562964,-44.4480709],
-            [-20.0256695,-44.0572964],
-            [-20.0711891,-44.2999506],
-            [-19.4903208,-44.3938098],
-            [-20.1975724,-44.4224889],
-            [-20.075556,-44.576389],
-            [-20.6707092,-43.6183335],
-            [-20.537708,-43.983346],
-            [-19.9433129,-44.34137459999999],
-            [-20.914444,-44.077778],
-            [-19.5081043,-44.6782933],
-            [-20.0698627,-44.1815176],
-            [-19.986666,-44.428056],
-            [-20.3314696,-44.0539299],
-            [-20.5230256,-43.6917329],
-            [-20.3855743,-43.5035777],
-            [-19.4487775,-44.7478694],
-            [-19.8600249,-44.60758389999999],
-            [-19.2784382,-44.4062327],
-            [-19.6315163,-44.6597262],
-            [-20.4704064,-44.22428619999999],
-            [-19.2236338,-45.0056798],
-            [-20.7370051,-43.8864226],
-            [-20.921945,-44.237777],
-            [-20.2670203,-44.3074982],
-            [-20.6372767,-43.9627492],
-            [-20.0489052,-44.2731691],
-            [-19.6960606,-44.5690225],
-            [-20.0371483,-44.14501509999999],
-            [-19.45738,-44.2416695]
-        ];
-
         var cluster = {{ content[0] }};
 
         var iconB = L.icon ({
