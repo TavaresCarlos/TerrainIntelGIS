@@ -15,4 +15,6 @@ pip install -U Flask-SQLAlchemy
 pip install scikit-learn
 pip install pyclustering
 
+pip install reportlab
+
 python -u server.py
