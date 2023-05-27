@@ -6,17 +6,18 @@
 
 #mapa {
 	width: 100%; 
-	height: 80vh;
+	height: 85vh;
+	border: solid black 1px;
 }
 
-#agrupamentos, #cidadesRelacao {
-	position: absolute; 
-	z-index: 9999; 
-	width: 400px; 
-	height: 0px;
-	left: 70px; 
-	top: 85px; 
-	background-color: #FFFFFF; 
+#agrupamentos {
+	border: solid black 1px;
 	overflow-y: scroll;
+	height: 30%;
 }
 
+#cidadesRelacao {
+	border: solid black 1px;
+	overflow-y: scroll;
+	height: 30%;
+}

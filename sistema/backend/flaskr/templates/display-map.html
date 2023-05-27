@@ -34,56 +34,59 @@
 <body>
     
     <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
+        <div class="col-12">
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+                    <!--<div id="">
+                        <form action="/gerarRelatorio" method="POST">
+                            <button class="btn btn-outline-success">Gerar Relatório PDF</button>
+                        </form>
+                    </div>-->
                     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                        <a class="navbar-brand" href="#">{{nomeSistema}}</a>
+                        <a class="navbar-brand" href="#">TerrainIntelGIS</a>
                     </div><button class="btn btn-outline-success">Logout</button>
                 </div>
             </nav>
         </div>
-        <div class="col-2" style="padding: 10px 0px 0px 0px;">
-            
-        </div>
     </div>
 
     <div class="row" style="margin-left: 0.5%;">
-        <div class="col-10">
-            <div id="mapa">
-                <div id="agrupamentos"> 
-                    <ul>
-                    <!--Para cada agrupamento-->
-                    {% for i in range(content[2]) %}
-                        <p><strong>Agrupamento: {{i}} </strong></p>
-                        <!--Para cada atributo selecionado-->
-                        {% for p in range(content[6]|length) %}
-                            <!--Property: Value-->
-                            <li>{{ content[6][p] }}: {{ content[1][i][p] | round(2) }}</li>
-                            <br>
-
-                        {% endfor %}
+        <div class="col-3">
+            <div id="agrupamentos"> 
+                <ul>
+                <p><strong>MÉDIAS DOS ATRIBUTOS:</strong></p>
+                <!--Para cada agrupamento-->
+                {% for i in range(content[2]) %}
+                    <p><strong>Agrupamento: {{i+1}} </strong></p>
+                    <!--Para cada atributo selecionado-->
+                    {% for p in range(content[6]|length) %}
+                        <!--Property: Value-->
+                        <li class="list-group-item">{{ content[6][p] }}: {{ content[1][i][p] | round(2) }}</li>
                     {% endfor %}
-                    </ul>
-                </div>
-                <div id="cidadesRelacao"> 
-                    <p><strong>AGRUPAMENTOS FORMADOS:</strong></p>
+                    <br>
+                {% endfor %}
+                </ul>
+            </div>
+            <div id="cidadesRelacao"> 
+                <br>
+                <ul>
+                    <p><strong>CIDADES POR AGRUPAMENTOS:</strong></p>
                     {% for c in content[3] %}
-                        <p>{{ c }}</p>
+                        <p><strong>Agrupamento: {{loop.index}}</strong></p>
+                        <li class="list-group-item">{{ c }}</li> 
+                        <br>
                     {% endfor %}
-                </div>
+                </ul>
             </div>
         </div>
-        <div class="col-2">
-            <div id="">
-                <form action="/gerarRelatorio" method="POST">
-                    <button class="btn btn-outline-success">Gerar Relatório PDF</button>
-                </form>
+        <div class="col-8">
+            <div id="mapa">
             </div>
+        </div>
+        <div class="col-1">
         </div>
     </div>
     <div class="row" style="margin-left: 0.5%;">
@@ -126,54 +129,6 @@
             metric: true,
             imperial: false
         }).addTo(map);
-
-
-        //Botões com funcionalidades
-        //Botão que mostra os agrupamentos com o valor de centroide de cada uma
-        const agrupamentosVisualizacao = L.easyButton({
-            states: [{
-                    stateName: 'visualizacao-on',        
-                    icon:      'fa-tree',               
-                    title:     'Visualização dos Agrupamentos Formados',      
-                    onClick: function(btn, map) {       
-                        document.getElementById("agrupamentos").style.height = "400px";
-                        btn.state('visualizacao-off');
-                    }
-                }, {
-                    stateName: 'visualizacao-off',
-                    icon:      'fa-tree',
-                    title:     'Visualização dos Agrupamentos Formados',
-                    onClick: function(btn, map) {
-                        document.getElementById("agrupamentos").style.height = "0px";
-                        btn.state('visualizacao-on');
-                    }
-            }]
-        });
-
-        agrupamentosVisualizacao.addTo(map);
-
-        //Botão que mostra as cidades de cada agrupamento gerado
-        const cidadesAgrupamento = L.easyButton({
-            states: [{
-                    stateName: 'cidades-on',        
-                    icon:      'fa-tree',               
-                    title:     'Visualização das Cidades de Cada Agrupamento',      
-                    onClick: function(btn, map) {       
-                        document.getElementById("cidadesRelacao").style.height = "400px";
-                        btn.state('cidades-off');
-                    }
-                }, {
-                    stateName: 'cidades-off',
-                    icon:      'fa-tree',
-                    title:     'Visualização das Cidades de Cada Agrupamento',
-                    onClick: function(btn, map) {
-                        document.getElementById("cidadesRelacao").style.height = "0px";
-                        btn.state('cidades-on');
-                    }
-            }]
-        });
-
-        cidadesAgrupamento.addTo(map);
 
         const coordenadas = coordinates;
         
@@ -243,8 +198,7 @@
         var app = new Vue({
             el: "#app",
             data: {
-                nomeSistema: "TerrainIntelGIS",
-                mostrar: true,
+                nomeSistema: "TerrainIntelGIS"
             }
         })
     </script>
