@@ -2,6 +2,7 @@
 	margin:  0;
 	padding:  0;
 	box-sizing: border-box;
+	overflow-x: hidden;
 }
 
 #mapa {
@@ -13,11 +14,11 @@
 #agrupamentos {
 	border: solid black 1px;
 	overflow-y: scroll;
-	height: 30%;
+	height: 42.5vh;
 }
 
 #cidadesRelacao {
 	border: solid black 1px;
 	overflow-y: scroll;
-	height: 30%;
+	height: 42.5vh;
 }

@@ -123,17 +123,17 @@ def save_file():
 		
 		#GRÁFICO LATERAL: GRÁFICO X E Y COM OS CLUSTERS GERADOS APÓS O PCA
 
-		g = [
-			cluster[0],
-			list(cluster[1]),
-			number_k,
-			array_cluster_cities,
-			array_cluster_properties,
-			array_cluster_statistics,
-			list(features_selecteds)
-		]
+		g1 = {
+			"agrupamentos": cluster[0],
+			"centroide": list(cluster[1]),
+			"numero_grupos": number_k,
+			"cidades_agrupamentos": array_cluster_cities,
+			"valores_brutos": array_cluster_properties,
+			"est": array_cluster_statistics,
+			"propriedades_selecionadas": list(features_selecteds)
+		}
 
-		return render_template('display-map.html', content=list(g))
+		return render_template('display-map.html', name=g1)
 		
 		#File to tests
 		#return render_template('treinamento.html', content=array_cluster_statistics)

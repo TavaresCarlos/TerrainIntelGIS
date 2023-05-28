@@ -35,36 +35,41 @@
     
     <div class="row">
         <div class="col-12">
-            <nav class="navbar navbar-expand-lg bg-light">
+
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <!--<div id="">
-                        <form action="/gerarRelatorio" method="POST">
-                            <button class="btn btn-outline-success">Gerar Relatório PDF</button>
-                        </form>
-                    </div>-->
-                    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-                        <a class="navbar-brand" href="#">TerrainIntelGIS</a>
-                    </div><button class="btn btn-outline-success">Logout</button>
+                    <a class="navbar-brand" href="#">TerrainIntelGIS</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    <div class="collapse navbar-collapse" id="navbarText">
+                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <form action="/gerarRelatorio" method="POST">
+                                <button class="nav-link active">Gerar Relatório PDF</button>
+                            </form>
+                        </li>
+                      </ul>
+                      <button class="btn btn-outline-success">Logout</button>
+                    </div>
                 </div>
             </nav>
+
         </div>
     </div>
 
-    <div class="row" style="margin-left: 0.5%;">
-        <div class="col-3">
+    <div class="row">
+        <div class="col-md-3">
             <div id="agrupamentos"> 
                 <ul>
                 <p><strong>MÉDIAS DOS ATRIBUTOS:</strong></p>
                 <!--Para cada agrupamento-->
-                {% for i in range(content[2]) %}
+                {% for i in range(name.centroide|length) %}
                     <p><strong>Agrupamento: {{i+1}} </strong></p>
                     <!--Para cada atributo selecionado-->
-                    {% for p in range(content[6]|length) %}
+                    {% for p in range(name.propriedades_selecionadas|length) %}
                         <!--Property: Value-->
-                        <li class="list-group-item">{{ content[6][p] }}: {{ content[1][i][p] | round(2) }}</li>
+                        <li class="list-group-item">{{ name.propriedades_selecionadas[p] }}: {{ name.centroide[i][p] | round(2) }}</li>
                     {% endfor %}
                     <br>
                 {% endfor %}
@@ -74,7 +79,7 @@
                 <br>
                 <ul>
                     <p><strong>CIDADES POR AGRUPAMENTOS:</strong></p>
-                    {% for c in content[3] %}
+                    {% for c in name.cidades_agrupamentos %}
                         <p><strong>Agrupamento: {{loop.index}}</strong></p>
                         <li class="list-group-item">{{ c }}</li> 
                         <br>
@@ -82,19 +87,14 @@
                 </ul>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-md-9">
             <div id="mapa">
             </div>
         </div>
-        <div class="col-1">
-        </div>
     </div>
-    <div class="row" style="margin-left: 0.5%;">
-        <div id="cidades">
-            
-        </div>
+    <div class="row">
+        <p>Heatmap</p>
     </div>
-
 
     <script>
         var map = L.map('mapa').setView([mapa.long, mapa.lat], mapa.zoom);
@@ -132,7 +132,7 @@
 
         const coordenadas = coordinates;
         
-        var cluster = {{ content[0] }};
+        var cluster = {{ name.agrupamentos }};
 
         var iconB = L.icon ({
             iconUrl: '../static/img/marker-icon-black.png',
@@ -203,7 +203,7 @@
         })
     </script>
 
-    <!--{{content}}-->
+    <!--{{name}}-->
 
 </body>
 </html>
