@@ -1,0 +1,5 @@
+-Exportar relatório em pdf
+-Mapa com o polígono da região de interesse
+-Mapa com o polígono de cada cidade (cada cidade com cor diferente - de acordo com o cluster)
+
+-Mostrar heatmap dos valores (ou boxplot - preferência)

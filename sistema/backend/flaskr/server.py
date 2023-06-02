@@ -31,6 +31,7 @@ from sklearn.cluster import KMeans
 from werkzeug.utils import secure_filename
 from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
+from sklearn.preprocessing import minmax_scale
 
 import csv
 
@@ -120,12 +121,16 @@ def save_file():
 		array_cluster_cities = cluster_cities_generate(number_k, cities_name, cluster[0])
 		array_cluster_properties = cluster_properties_generate(number_k, file_float_tratament, cluster[0])
 		array_cluster_statistics = cluster_statistics_generate(number_k, array_cluster_properties)
+
 		
 		#GRÁFICO LATERAL: GRÁFICO X E Y COM OS CLUSTERS GERADOS APÓS O PCA
+
+		l = [list(x) for x in list(cluster[2])]
 
 		g1 = {
 			"agrupamentos": cluster[0],
 			"centroide": list(cluster[1]),
+			"centroide_normalizado": l,
 			"numero_grupos": number_k,
 			"cidades_agrupamentos": array_cluster_cities,
 			"valores_brutos": array_cluster_properties,
@@ -319,7 +324,15 @@ def k_means(file, number_k):
 	kmeans = KMeans(n_clusters = number_k, random_state = 0)
 	cluster = kmeans.fit_predict(file)
 	centroide = kmeans.cluster_centers_
-	return list(cluster), centroide
+
+
+	#Agrupamento com os dados normalizados
+	file_norm = minmax_scale(file)
+	kmeans_norm = KMeans(n_clusters = number_k, random_state = 0)
+	cluster_norm = kmeans_norm.fit_predict(file_norm )
+	centroid_minmax = kmeans_norm.cluster_centers_
+
+	return list(cluster), centroide, centroid_minmax
 
 app.run(host="0.0.0.0", port=3000, debug = True)
 

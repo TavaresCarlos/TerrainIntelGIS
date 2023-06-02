@@ -22,3 +22,9 @@
 	overflow-y: scroll;
 	height: 42.5vh;
 }
+
+#heatmap {
+	border: solid black 1px;
+	width: 100%; 
+	height: 100vh;
+}
