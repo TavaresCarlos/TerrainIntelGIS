@@ -132,7 +132,8 @@ def save_file():
 			"centroide": list(cluster[1]),
 			"centroide_normalizado": l,
 			"numero_grupos": number_k,
-			"cidades_agrupamentos": array_cluster_cities,
+			"nome_cidades": cities_name,
+			"cidades_agrupamentos": list(array_cluster_cities),
 			"valores_brutos": array_cluster_properties,
 			"est": array_cluster_statistics,
 			"propriedades_selecionadas": list(features_selecteds)

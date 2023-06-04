@@ -150,25 +150,149 @@
         };
 
         var cont = -1;
+        var cores = "{{ name.agrupamentos }}";
+        var cidades = "{{ name.nome_cidades }}";
+
+        cores = cores.replace('[', '').replace(']', '');
+        cores = cores.split(',');
+
+        cidades = cidades.replace(/&#39;/g, "").replace("[", " ").replace("]", "");
+        cidades = cidades.split(',');
+
         function onEachFeature(feature, layer) {
-            cont++;
-            var cores = "{{ name.agrupamentos }}";
-            cores = cores.replace('[', '').replace(']', '');
-            cores = cores.split(',');
+
+            /*const agrupamento_cor = {
+                '0' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '1' : () => layer.setStyle({fillColor :'green', fillOpacity: 1}),
+                '3' : () => layer.setStyle({fillColor :'blue', fillOpacity: 1}),
+                '4' : () => layer.setStyle({fillColor :'yellow', fillOpacity: 1}),
+                '5' : () => layer.setStyle({fillColor :'orange', fillOpacity: 1}),
+                '6' : () => layer.setStyle({fillColor :'purple', fillOpacity: 1}),
+                '7' : () => layer.setStyle({fillColor :'pink', fillOpacity: 1}),
+                '8' : () => layer.setStyle({fillColor :'cyan', fillOpacity: 1}),
+                '9' : () => layer.setStyle({fillColor :'gray', fillOpacity: 1}),
+                '10' : () => layer.setStyle({fillColor :'black', fillOpacity: 1}),
+                '11' : () => layer.setStyle({fillColor :'indigo', fillOpacity: 1}),
+                '12' : () => layer.setStyle({fillColor :'lightblue', fillOpacity: 1}),
+                '13' : () => layer.setStyle({fillColor :'jade', fillOpacity: 1}),
+                '14' : () => layer.setStyle({fillColor :'harlequim', fillOpacity: 1}),
+                '15' : () => layer.setStyle({fillColor :'maroon', fillOpacity: 1}),
+                '16' : () => layer.setStyle({fillColor :'violet', fillOpacity: 1}),
+                '17' : () => layer.setStyle({fillColor :'azure', fillOpacity: 1}),
+                '18' : () => layer.setStyle({fillColor :'aquamarine', fillOpacity: 1}),
+                '19' : () => layer.setStyle({fillColor :'amber', fillOpacity: 1}),
+                '20' : () => layer.setStyle({fillColor :'carmine', fillOpacity: 1}),
+                '21' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '22' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '23' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '24' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '25' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '26' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '27' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '28' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '29' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '30' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '31' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '32' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '33' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '34' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '35' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '36' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '37' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '38' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '39' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '40' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '41' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '42' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '43' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '44' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '45' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '46' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '47' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
+                '48' : () => layer.setStyle({fillColor :'red', fillOpacity: 1})
+            };
+
+            var c = parseInt(cores[cont])
+            agrupamento_cor[c]*/
+
+            cont = cidades.indexOf(" " +feature.properties.name)
+            
 
             if(cores[cont] == 0){
-                layer.setStyle({fillColor :'red', fillOpacity: 1}) 
+                layer.setStyle({fillColor :'red', fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 1
+                `)
             }
             else if(cores[cont] == 1){
-               layer.setStyle({fillColor :'green', fillOpacity: 1})
+               layer.setStyle({fillColor :'green', fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 2
+                `)
+            }
+            else if(cores[cont] == 2){
+               layer.setStyle({fillColor :'yellow', fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 3
+                `)
+            }
+            else if(cores[cont] == 3){
+               layer.setStyle({fillColor :'orange', fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 4
+                `)
+            }
+            else if(cores[cont] == 4){
+               layer.setStyle({fillColor :'gray', fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 5
+                `)
+            }
+            else if(cores[cont] == 5){
+               layer.setStyle({fillColor :'black', fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 6
+                `)
+            }
+            else if(cores[cont] == 6){
+               layer.setStyle({fillColor :'blue', fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 7
+                `)
+            }
+            else if(cores[cont] == 7){
+               layer.setStyle({fillColor :'brown', fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 8
+                `)
+            }
+            else if(cores[cont] == 8){
+               layer.setStyle({fillColor :'cerise', fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 9
+                `)
+            }
+            else if(cores[cont] == 9){
+               layer.setStyle({fillColor :'violet', fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 10
+                `)
+            }
+            else if(cores[cont] == 10){
+               layer.setStyle({fillColor :'plum', fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 11
+                `)
             }
         }
 
+
         //Camadas overlayer
+        //geometria não ordenada
         const overlayMaps = {
             "Polígono Envolvente" : L.geoJSON(geometria, {
                 onEachFeature: onEachFeature
-            })
+            }).addTo(map)
         }
 
 
@@ -180,6 +304,28 @@
             metric: true,
             imperial: false
         }).addTo(map);
+
+        var legend = L.control({position: 'bottomright'});
+
+        legend.onAdd = (map) => {
+          var div = L.DomUtil.create("div", "legend");
+          div.innerHTML += "<h4>Relação Cor e Agrupamento</h4>";
+          div.innerHTML += '<i style="background: red"></i><span>Agrupamento 01</span><br>';
+          div.innerHTML += '<i style="background: green"></i><span>Agrupamento 02</span><br>';
+          div.innerHTML += '<i style="background: yellow"></i><span>Agrupamento 03</span><br>';
+          div.innerHTML += '<i style="background: orange"></i><span>Agrupamento 04</span><br>';
+          div.innerHTML += '<i style="background: gray"></i><span>Agrupamento 05</span><br>';
+          div.innerHTML += '<i style="background: black"></i><span>Agrupamento 06</span><br>';
+          div.innerHTML += '<i style="background: blue"></i><span>Agrupamento 07</span><br>';
+          div.innerHTML += '<i style="background: brown"></i><span>Agrupamento 08</span><br>';
+          div.innerHTML += '<i style="background: violet"></i><span>Agrupamento 09</span><br>';
+          div.innerHTML += '<i style="background: plum"></i><span>Agrupamento 10</span><br>';
+        
+          return div;
+        };
+
+        legend.addTo(map);
+
   
         /*const coordenadas = coordinates;
         
