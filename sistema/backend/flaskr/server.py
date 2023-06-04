@@ -128,7 +128,7 @@ def save_file():
 		l = [list(x) for x in list(cluster[2])]
 
 		g1 = {
-			"agrupamentos": cluster[0],
+			"agrupamentos": list(cluster[0]),
 			"centroide": list(cluster[1]),
 			"centroide_normalizado": l,
 			"numero_grupos": number_k,

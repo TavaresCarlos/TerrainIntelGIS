@@ -11,7 +11,7 @@
     <!--Leaflet-->
     <link rel="stylesheet" href="../static/css/leaflet/leaflet.css" crossorigin="" />
     <script src="../static/js/leaflet/leaflet.js"></script>
-    <script src="../static/js/leaflet/leaflet-src.esm.js"></script>
+    <script type="module" src="../static/js/leaflet/leaflet-src.esm.js"></script>
     <script src="../static/js/leaflet/leaflet-src.js"></script>
 
     <!--Plotly-->
@@ -107,8 +107,6 @@
                     y_label[i] = i+1;
                 }
 
-                console.log(y_label)
-
                 const data = [{
                     z: {{ name.centroide_normalizado }},
                     x: prop_selec,
@@ -135,9 +133,10 @@
         var map = L.map('mapa').setView([mapa.long, mapa.lat], mapa.zoom);
 
        //Camadas-bases
-       const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+            maxZoom: 19
+            }).addTo(map);
 
         const world = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
             maxZoom: 21,
@@ -150,10 +149,27 @@
             "Ortofoto" : world
         };
 
+        var cont = -1;
+        function onEachFeature(feature, layer) {
+            cont++;
+            var cores = "{{ name.agrupamentos }}";
+            cores = cores.replace('[', '').replace(']', '');
+            cores = cores.split(',');
+
+            if(cores[cont] == 0){
+                layer.setStyle({fillColor :'red', fillOpacity: 1}) 
+            }
+            else if(cores[cont] == 1){
+               layer.setStyle({fillColor :'green', fillOpacity: 1})
+            }
+        }
+
         //Camadas overlayer
         const overlayMaps = {
-            "Polígono Envolvente" : osm
-        };
+            "Polígono Envolvente" : L.geoJSON(geometria, {
+                onEachFeature: onEachFeature
+            })
+        }
 
 
         //Controlador das camadas-bases e overlayer
@@ -165,7 +181,7 @@
             imperial: false
         }).addTo(map);
   
-        const coordenadas = coordinates;
+        /*const coordenadas = coordinates;
         
         var cluster = {{ name.agrupamentos }};
 
@@ -226,11 +242,11 @@
             if(cluster[i]  === 8) {
                 L.marker(coordenadas[i], {icon: iconY}).addTo(map).bindPopup("cluster: 8");
             }
-        }
+        }*/
 
     </script>
 
-    <!--{{name}}-->
+    {{name}}
 
 </body>
 </html>
