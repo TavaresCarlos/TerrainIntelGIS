@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,12 +11,19 @@
     <!--Leaflet-->
     <link rel="stylesheet" href="../static/css/leaflet/leaflet.css" crossorigin="" />
     <script src="../static/js/leaflet/leaflet.js"></script>
-    <script src="../static/js/leaflet/leaflet-src.esm.js"></script>
+    <script type="module" src="../static/js/leaflet/leaflet-src.esm.js"></script>
     <script src="../static/js/leaflet/leaflet-src.js"></script>
+
+    <!--Plotly-->
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js" charset="utf-8"></script>
+
+    <!--Leaflet.EasyButton-->
+    <link rel="stylesheet" href="../static/css/Leaflet.EasyButton/easy-button.css" crossorigin="" />
+    <script src="../static/js/Leaflet.EasyButton/easy-button.js"></script>
 
     <!--Bootstrap-->
     <link rel="stylesheet" href="../static/css/bootstrap/bootstrap.css" crossorigin="" />
-    <script src="../static/js/bootstrap/bootstrap.js"></script>
+    <script type="module" src="../static/js/bootstrap/bootstrap.js"></script>
     
     <!--Meu CSS-->
     <link rel="stylesheet" href="../static/css/global.css"> 
@@ -24,66 +31,61 @@
     <!--CDN Vue Framework-->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 
+    <title>Mapa</title>
 
-    <title>TerrainIntelGIS</title>
 </head>
 <body>
     <div id="app">
         <div class="row">
-            <div class="col-2"></div>
-                <div class="col-8" style="border: 1px solid black;">
-     
-                    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                        <div class="container-fluid">
-                            <a class="navbar-brand" href="#">TerrainIntelGIS</a>
-                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-                            <div class="collapse navbar-collapse" id="navbarText">
-                              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li class="nav-item">
-                                    <form action="/gerarRelatorio" method="POST">
-                                        <button class="nav-link active">Gerar Relatório PDF</button>
-                                    </form>
-                                </li>
-                              </ul>
-                              <button class="btn btn-outline-success">Logout</button>
-                            </div>
+            <div class="col-12">
+
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">TerrainIntelGIS</a>
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                        <div class="collapse navbar-collapse" id="navbarText">
+                          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                          </ul>
+                          <button class="btn btn-outline-success">Logout</button>
                         </div>
-                    </nav>
-
-                    <div>
-                        <p><strong><h6>Upload do arquivo .csv</h6></strong></p>
                     </div>
+                </nav>
 
-                    <div>
-                        <p>Ícones</p>
-                    </div>
-                    
-                    <div id="upload" style="padding-bottom: 5%;">
-                        <form action = "/features" method = "POST" enctype = "multipart/form-data">
-                            <label for="informarK">Informar o número de agrupamentos?</label>
-                            <select @change="mostrar = !mostrar" name="informarK">
-                              <option value="sim">Sim</option>
-                              <option value="nao">Não</option>
-                            </select>
-                            <br/><br />
-                            
-                            <div v-if="mostrar">
-                                <label for="valorK">Digite o valor:</label>
-                                <input type="number" name="valorK"/>
-                            </div>
-
-                            <br/><br />
-                            <input type = "file" name = "file" />
-                            <br><br>
-                            <input type = "submit"/>
-                            <input type = "reset"/>
-                        </form> 
-                    </div>
-
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4" id="upload">
+                <div>
+                    <p><strong><h6>Upload do arquivo .csv</h6></strong></p>
                 </div>
-            <div class="col-2"></div>
+
+                <div>
+                    <p>Ícones</p>
+                </div>     
+                <form action = "/features" method = "POST" enctype = "multipart/form-data">
+                    <label for="informarK">Informar o número de agrupamentos?</label>
+                    <select @change="mostrar = !mostrar" name="informarK">
+                      <option value="sim">Sim</option>
+                      <option value="nao">Não</option>
+                    </select>
+                    <br/><br />
+                    
+                    <div v-if="mostrar">
+                        <label for="valorK">Digite o valor:</label>
+                        <input type="number" name="valorK"/>
+                    </div>
+
+                    <br/><br />
+                    <input type = "file" name = "file" />
+                    <br><br>
+                    <input type = "submit"/>
+                    <input type = "reset"/>
+                </form> 
+            </div>
+            <div class="col-md-4"></div>
         </div>
     </div>
 

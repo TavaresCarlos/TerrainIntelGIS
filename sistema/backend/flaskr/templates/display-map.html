@@ -28,6 +28,23 @@
     <!--Meu CSS-->
     <link rel="stylesheet" href="../static/css/global.css"> 
 
+    <!--Gerando PDF com JSPDF via CDNJ-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
+
+    <script>
+        function gerarPDF() {
+            var doc = new jsPDF({
+              orientation: 'landscape',
+              unit: 'cm',
+              format: 'letter'
+            })
+            doc.setTextColor(100);
+            doc.text("This is gray.", 20, 20);
+
+            doc.save('relatorio.pdf')
+        }
+    </script>    
+
     <title>Mapa</title>
 
 </head>
@@ -45,9 +62,7 @@
                     <div class="collapse navbar-collapse" id="navbarText">
                       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <form action="/gerarRelatorio" method="POST">
-                                <button class="nav-link active">Gerar Relatório PDF</button>
-                            </form>
+                            <button class="nav-link active" onclick="gerarPDF()">Gerar Relatório PDF</button>
                         </li>
                       </ul>
                       <button class="btn btn-outline-success">Logout</button>
@@ -159,62 +174,20 @@
         cidades = cidades.replace(/&#39;/g, "").replace("[", " ").replace("]", "");
         cidades = cidades.split(',');
 
+        function gerarCor() {
+            const letra = "0123456789ABCDEF";
+            var cor = "#";
+
+            for (let i = 0; i < 6; i++) {
+                cor+= letra[Math.floor(Math.random() * 16)];
+            }
+  
+            return cor;
+        }
+
+        //Gerar array de cores a ser usado para preenchimento do mapa e da legenda
+
         function onEachFeature(feature, layer) {
-
-            /*const agrupamento_cor = {
-                '0' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '1' : () => layer.setStyle({fillColor :'green', fillOpacity: 1}),
-                '3' : () => layer.setStyle({fillColor :'blue', fillOpacity: 1}),
-                '4' : () => layer.setStyle({fillColor :'yellow', fillOpacity: 1}),
-                '5' : () => layer.setStyle({fillColor :'orange', fillOpacity: 1}),
-                '6' : () => layer.setStyle({fillColor :'purple', fillOpacity: 1}),
-                '7' : () => layer.setStyle({fillColor :'pink', fillOpacity: 1}),
-                '8' : () => layer.setStyle({fillColor :'cyan', fillOpacity: 1}),
-                '9' : () => layer.setStyle({fillColor :'gray', fillOpacity: 1}),
-                '10' : () => layer.setStyle({fillColor :'black', fillOpacity: 1}),
-                '11' : () => layer.setStyle({fillColor :'indigo', fillOpacity: 1}),
-                '12' : () => layer.setStyle({fillColor :'lightblue', fillOpacity: 1}),
-                '13' : () => layer.setStyle({fillColor :'jade', fillOpacity: 1}),
-                '14' : () => layer.setStyle({fillColor :'harlequim', fillOpacity: 1}),
-                '15' : () => layer.setStyle({fillColor :'maroon', fillOpacity: 1}),
-                '16' : () => layer.setStyle({fillColor :'violet', fillOpacity: 1}),
-                '17' : () => layer.setStyle({fillColor :'azure', fillOpacity: 1}),
-                '18' : () => layer.setStyle({fillColor :'aquamarine', fillOpacity: 1}),
-                '19' : () => layer.setStyle({fillColor :'amber', fillOpacity: 1}),
-                '20' : () => layer.setStyle({fillColor :'carmine', fillOpacity: 1}),
-                '21' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '22' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '23' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '24' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '25' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '26' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '27' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '28' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '29' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '30' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '31' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '32' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '33' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '34' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '35' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '36' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '37' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '38' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '39' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '40' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '41' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '42' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '43' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '44' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '45' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '46' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '47' : () => layer.setStyle({fillColor :'red', fillOpacity: 1}),
-                '48' : () => layer.setStyle({fillColor :'red', fillOpacity: 1})
-            };
-
-            var c = parseInt(cores[cont])
-            agrupamento_cor[c]*/
-
             cont = cidades.indexOf(" " +feature.properties.name)
             
 
@@ -308,20 +281,69 @@
         var legend = L.control({position: 'bottomright'});
 
         legend.onAdd = (map) => {
-          var div = L.DomUtil.create("div", "legend");
-          div.innerHTML += "<h4>Relação Cor e Agrupamento</h4>";
-          div.innerHTML += '<i style="background: red"></i><span>Agrupamento 01</span><br>';
-          div.innerHTML += '<i style="background: green"></i><span>Agrupamento 02</span><br>';
-          div.innerHTML += '<i style="background: yellow"></i><span>Agrupamento 03</span><br>';
-          div.innerHTML += '<i style="background: orange"></i><span>Agrupamento 04</span><br>';
-          div.innerHTML += '<i style="background: gray"></i><span>Agrupamento 05</span><br>';
-          div.innerHTML += '<i style="background: black"></i><span>Agrupamento 06</span><br>';
-          div.innerHTML += '<i style="background: blue"></i><span>Agrupamento 07</span><br>';
-          div.innerHTML += '<i style="background: brown"></i><span>Agrupamento 08</span><br>';
-          div.innerHTML += '<i style="background: violet"></i><span>Agrupamento 09</span><br>';
-          div.innerHTML += '<i style="background: plum"></i><span>Agrupamento 10</span><br>';
+            var div = L.DomUtil.create("div", "legend");
+
+            /*
+            div.innerHTML += "<h4>Relação Cor e Agrupamento</h4>";
+            for(let i=0; i<49; i++){
+                div.innerHTML += `<i style="background: `+ gerarCor() + `"></i><span>Agrupamento `+ i +`</span><br>`;
+            }
+            */
+
+            div.innerHTML += "<h4>Relação Cor e Agrupamento</h4>";
+            div.innerHTML += '<i style="background: red"></i><span>Agrupamento 01</span><br>';
+            div.innerHTML += '<i style="background: green"></i><span>Agrupamento 02</span><br>';
+            div.innerHTML += '<i style="background: yellow"></i><span>Agrupamento 03</span><br>';
+            div.innerHTML += '<i style="background: orange"></i><span>Agrupamento 04</span><br>';
+            div.innerHTML += '<i style="background: gray"></i><span>Agrupamento 05</span><br>';
+            div.innerHTML += '<i style="background: black"></i><span>Agrupamento 06</span><br>';
+            div.innerHTML += '<i style="background: blue"></i><span>Agrupamento 07</span><br>';
+            div.innerHTML += '<i style="background: brown"></i><span>Agrupamento 08</span><br>';
+            div.innerHTML += '<i style="background: violet"></i><span>Agrupamento 09</span><br>';
+            div.innerHTML += '<i style="background: plum"></i><span>Agrupamento 10</span><br>';
+
+            div.innerHTML += '<i style="background: salmon"></i><span>Agrupamento 11</span><br>';
+            div.innerHTML += '<i style="background: beige"></i><span>Agrupamento 12</span><br>';
+            div.innerHTML += '<i style="background: lilac"></i><span>Agrupamento 13</span><br>';
+            div.innerHTML += '<i style="background: orange"></i><span>Agrupamento 14</span><br>';
+            div.innerHTML += '<i style="background: gray"></i><span>Agrupamento 15</span><br>';
+            div.innerHTML += '<i style="background: black"></i><span>Agrupamento 16</span><br>';
+            div.innerHTML += '<i style="background: blue"></i><span>Agrupamento 17</span><br>';
+            div.innerHTML += '<i style="background: brown"></i><span>Agrupamento 18</span><br>';
+            div.innerHTML += '<i style="background: violet"></i><span>Agrupamento 19</span><br>';
+            div.innerHTML += '<i style="background: plum"></i><span>Agrupamento 20</span><br>';
+            div.innerHTML += '<i style="background: red"></i><span>Agrupamento 21</span><br>';
+            div.innerHTML += '<i style="background: green"></i><span>Agrupamento 22</span><br>';
+            div.innerHTML += '<i style="background: yellow"></i><span>Agrupamento 23</span><br>';
+            div.innerHTML += '<i style="background: orange"></i><span>Agrupamento 24</span><br>';
+            div.innerHTML += '<i style="background: gray"></i><span>Agrupamento 25</span><br>';
+            div.innerHTML += '<i style="background: black"></i><span>Agrupamento 26</span><br>';
+            div.innerHTML += '<i style="background: blue"></i><span>Agrupamento 27</span><br>';
+            div.innerHTML += '<i style="background: brown"></i><span>Agrupamento 28</span><br>';
+            div.innerHTML += '<i style="background: violet"></i><span>Agrupamento 29</span><br>';
+            div.innerHTML += '<i style="background: plum"></i><span>Agrupamento 30</span><br>';
+            div.innerHTML += '<i style="background: red"></i><span>Agrupamento 31</span><br>';
+            div.innerHTML += '<i style="background: green"></i><span>Agrupamento 32</span><br>';
+            div.innerHTML += '<i style="background: yellow"></i><span>Agrupamento 33</span><br>';
+            div.innerHTML += '<i style="background: orange"></i><span>Agrupamento 34</span><br>';
+            div.innerHTML += '<i style="background: gray"></i><span>Agrupamento 35</span><br>';
+            div.innerHTML += '<i style="background: black"></i><span>Agrupamento 36</span><br>';
+            div.innerHTML += '<i style="background: blue"></i><span>Agrupamento 37</span><br>';
+            div.innerHTML += '<i style="background: brown"></i><span>Agrupamento 38</span><br>';
+            div.innerHTML += '<i style="background: violet"></i><span>Agrupamento 39</span><br>';
+            div.innerHTML += '<i style="background: plum"></i><span>Agrupamento 40</span><br>';
+            div.innerHTML += '<i style="background: red"></i><span>Agrupamento 41</span><br>';
+            div.innerHTML += '<i style="background: green"></i><span>Agrupamento 42</span><br>';
+            div.innerHTML += '<i style="background: yellow"></i><span>Agrupamento 43</span><br>';
+            div.innerHTML += '<i style="background: orange"></i><span>Agrupamento 44</span><br>';
+            div.innerHTML += '<i style="background: gray"></i><span>Agrupamento 45</span><br>';
+            div.innerHTML += '<i style="background: black"></i><span>Agrupamento 46</span><br>';
+            div.innerHTML += '<i style="background: blue"></i><span>Agrupamento 47</span><br>';
+            div.innerHTML += '<i style="background: brown"></i><span>Agrupamento 48</span><br>';
+
+            div.setAttribute("style", "height:400px; overflow-y: scroll;");
         
-          return div;
+            return div;
         };
 
         legend.addTo(map);

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,69 +11,57 @@
     <!--Leaflet-->
     <link rel="stylesheet" href="../static/css/leaflet/leaflet.css" crossorigin="" />
     <script src="../static/js/leaflet/leaflet.js"></script>
-    <script src="../static/js/leaflet/leaflet-src.esm.js"></script>
+    <script type="module" src="../static/js/leaflet/leaflet-src.esm.js"></script>
     <script src="../static/js/leaflet/leaflet-src.js"></script>
+
+    <!--Plotly-->
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js" charset="utf-8"></script>
+
+    <!--Leaflet.EasyButton-->
+    <link rel="stylesheet" href="../static/css/Leaflet.EasyButton/easy-button.css" crossorigin="" />
+    <script src="../static/js/Leaflet.EasyButton/easy-button.js"></script>
 
     <!--Bootstrap-->
     <link rel="stylesheet" href="../static/css/bootstrap/bootstrap.css" crossorigin="" />
-    <script src="../static/js/bootstrap/bootstrap.js"></script>
+    <script type="module" src="../static/js/bootstrap/bootstrap.js"></script>
     
     <!--Meu CSS-->
     <link rel="stylesheet" href="../static/css/global.css"> 
 
-    <!--CDN Vue Framework-->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <title>Mapa</title>
 
-
-    <title>TerrainIntelGIS</title>
 </head>
 <body>
-    <div id="app">
-        <div class="row">
-            <div class="col-2"></div>
-                <div class="col-8" style="border: 1px solid black;">
-     
-                    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                        <div class="container-fluid">
-                            <a class="navbar-brand" href="#">TerrainIntelGIS</a>
-                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-                            <div class="collapse navbar-collapse" id="navbarText">
-                              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li class="nav-item">
-                                    <form action="/gerarRelatorio" method="POST">
-                                        <button class="nav-link active">Gerar Relatório PDF</button>
-                                    </form>
-                                </li>
-                              </ul>
-                              <button class="btn btn-outline-success">Logout</button>
-                            </div>
-                        </div>
-                    </nav>
-
-                    <p>Escolha quais serão os atributos utilizados para o agrupamento dos dados:</p>
-					<form action="/display" method = "POST">
-
-						{% for attr in content %}
-						<input type="checkbox" id='{{attr}}' name='{{attr}}' value='{{attr}}'>
-							<label for='{{attr}}'>{{attr}}</label><br>
-						{% endfor %}
-						<input type="submit" value="Submit">
-					</form>
+    <div class="row">
+        <div class="col-12">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">TerrainIntelGIS</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    <div class="collapse navbar-collapse" id="navbarText">
+                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                      </ul>
+                      <button class="btn btn-outline-success">Logout</button>
+                    </div>
                 </div>
-            <div class="col-2"></div>
+            </nav>
+
         </div>
     </div>
+    <div class="row">
+        <div id="submenu">
+            <p>Escolha quais serão os atributos utilizados para o agrupamento dos dados:</p>
+			<form action="/display" method = "POST">
 
-    <script>
-        var app = new Vue({
-            el: "#app",
-            data: {
-                nomeSistema: "TerrainIntelGIS",
-                mostrar: true,
-            }
-        })
-    </script>
+				{% for attr in content %}
+				<input type="checkbox" id='{{attr}}' name='{{attr}}' value='{{attr}}'>
+					<label for='{{attr}}'>{{attr}}</label><br>
+				{% endfor %}
+				<input type="submit" value="Submit">
+			</form>
+        </div>
+    </div>
 </body>
 </html>
