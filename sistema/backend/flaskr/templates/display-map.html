@@ -29,19 +29,29 @@
     <link rel="stylesheet" href="../static/css/global.css"> 
 
     <!--Gerando PDF com JSPDF via CDNJ-->
+    <script src="../static/js/Leaflet-easyPrint.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
 
     <script>
-        function gerarPDF() {
-            var doc = new jsPDF({
-              orientation: 'landscape',
-              unit: 'cm',
-              format: 'letter'
-            })
-            doc.setTextColor(100);
-            doc.text("This is gray.", 20, 20);
+        function gerarPDF() {   
+            var canvasElement = document.getElementById('mapa');
+            html2canvas(canvasElement).then(function(canvas) {
+                var screenshot = canvas.toDataURL('image/png');
+                var doc = new jsPDF({
+                  orientation: 'landscape',
+                  unit: 'cm',
+                  format: 'letter'
+                })
 
-            doc.save('relatorio.pdf')
+                doc.addImage(screenshot, 'PNG', 0, 0, 10, 10);
+                
+                //doc.setTextColor(100);
+                //doc.text("This is gray.", 20, 20);
+
+                 doc.save('relatorio.pdf')
+            });
+
         }
     </script>    
 
@@ -185,6 +195,21 @@
             return cor;
         }
 
+        var cores_mapa = []
+        for(let i=0; i<k; i++){
+            const c = gerarCor();
+            
+            //Se a cor gerada ainda não foi sorteada
+            if(cores_mapa.indexOf(c) == -1) {
+                cores_mapa[i] = c;
+            }
+            else {
+                while(cores_mapa.indexOf(c) != -1) {
+                    const c = gerarCor();
+                }
+                cores_mapa[i] = c;
+            }
+        }
         //Gerar array de cores a ser usado para preenchimento do mapa e da legenda
 
         function onEachFeature(feature, layer) {
@@ -192,69 +217,297 @@
             
 
             if(cores[cont] == 0){
-                layer.setStyle({fillColor :'red', fillOpacity: 1}).bindPopup(`
+                layer.setStyle({fillColor : cores_mapa[0], fillOpacity: 1}).bindPopup(`
                     Cidade: `+feature.properties.name+`
                     <br>Agrupamento: 1
                 `)
             }
             else if(cores[cont] == 1){
-               layer.setStyle({fillColor :'green', fillOpacity: 1}).bindPopup(`
+               layer.setStyle({fillColor : cores_mapa[1], fillOpacity: 1}).bindPopup(`
                     Cidade: `+feature.properties.name+`
                     <br>Agrupamento: 2
                 `)
             }
             else if(cores[cont] == 2){
-               layer.setStyle({fillColor :'yellow', fillOpacity: 1}).bindPopup(`
+               layer.setStyle({fillColor : cores_mapa[2], fillOpacity: 1}).bindPopup(`
                     Cidade: `+feature.properties.name+`
                     <br>Agrupamento: 3
                 `)
             }
             else if(cores[cont] == 3){
-               layer.setStyle({fillColor :'orange', fillOpacity: 1}).bindPopup(`
+               layer.setStyle({fillColor : cores_mapa[3], fillOpacity: 1}).bindPopup(`
                     Cidade: `+feature.properties.name+`
                     <br>Agrupamento: 4
                 `)
             }
             else if(cores[cont] == 4){
-               layer.setStyle({fillColor :'gray', fillOpacity: 1}).bindPopup(`
+               layer.setStyle({fillColor : cores_mapa[4], fillOpacity: 1}).bindPopup(`
                     Cidade: `+feature.properties.name+`
                     <br>Agrupamento: 5
                 `)
             }
             else if(cores[cont] == 5){
-               layer.setStyle({fillColor :'black', fillOpacity: 1}).bindPopup(`
+               layer.setStyle({fillColor : cores_mapa[5], fillOpacity: 1}).bindPopup(`
                     Cidade: `+feature.properties.name+`
                     <br>Agrupamento: 6
                 `)
             }
             else if(cores[cont] == 6){
-               layer.setStyle({fillColor :'blue', fillOpacity: 1}).bindPopup(`
+               layer.setStyle({fillColor : cores_mapa[6], fillOpacity: 1}).bindPopup(`
                     Cidade: `+feature.properties.name+`
                     <br>Agrupamento: 7
                 `)
             }
             else if(cores[cont] == 7){
-               layer.setStyle({fillColor :'brown', fillOpacity: 1}).bindPopup(`
+               layer.setStyle({fillColor : cores_mapa[7], fillOpacity: 1}).bindPopup(`
                     Cidade: `+feature.properties.name+`
                     <br>Agrupamento: 8
                 `)
             }
             else if(cores[cont] == 8){
-               layer.setStyle({fillColor :'cerise', fillOpacity: 1}).bindPopup(`
+               layer.setStyle({fillColor : cores_mapa[8], fillOpacity: 1}).bindPopup(`
                     Cidade: `+feature.properties.name+`
                     <br>Agrupamento: 9
                 `)
             }
             else if(cores[cont] == 9){
-               layer.setStyle({fillColor :'violet', fillOpacity: 1}).bindPopup(`
+               layer.setStyle({fillColor : cores_mapa[9], fillOpacity: 1}).bindPopup(`
                     Cidade: `+feature.properties.name+`
                     <br>Agrupamento: 10
                 `)
             }
             else if(cores[cont] == 10){
-               layer.setStyle({fillColor :'plum', fillOpacity: 1}).bindPopup(`
+               layer.setStyle({fillColor : cores_mapa[10], fillOpacity: 1}).bindPopup(`
                     Cidade: `+feature.properties.name+`
                     <br>Agrupamento: 11
+                `)
+            }
+            else if(cores[cont] == 11){
+               layer.setStyle({fillColor : cores_mapa[11], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 12
+                `)
+            }
+            else if(cores[cont] == 12){
+               layer.setStyle({fillColor : cores_mapa[12], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 13
+                `)
+            }
+            else if(cores[cont] == 13){
+               layer.setStyle({fillColor : cores_mapa[13], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 14
+                `)
+            }
+            else if(cores[cont] == 14){
+               layer.setStyle({fillColor : cores_mapa[14], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 15
+                `)
+            }
+            else if(cores[cont] == 15){
+               layer.setStyle({fillColor : cores_mapa[15], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 16
+                `)
+            }
+            else if(cores[cont] == 16){
+               layer.setStyle({fillColor : cores_mapa[16], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 17
+                `)
+            }
+            else if(cores[cont] == 17){
+               layer.setStyle({fillColor : cores_mapa[17], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 18
+                `)
+            }
+            else if(cores[cont] == 18){
+               layer.setStyle({fillColor : cores_mapa[18], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 19
+                `)
+            }
+            else if(cores[cont] == 19){
+               layer.setStyle({fillColor : cores_mapa[19], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 20
+                `)
+            }
+            else if(cores[cont] == 20){
+               layer.setStyle({fillColor : cores_mapa[20], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 21
+                `)
+            }
+            else if(cores[cont] == 21){
+               layer.setStyle({fillColor : cores_mapa[21], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 22
+                `)
+            }
+            else if(cores[cont] == 22){
+               layer.setStyle({fillColor : cores_mapa[22], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 23
+                `)
+            }
+            else if(cores[cont] == 23){
+               layer.setStyle({fillColor : cores_mapa[23], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 24
+                `)
+            }
+            else if(cores[cont] == 24){
+               layer.setStyle({fillColor : cores_mapa[24], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 25
+                `)
+            }
+            else if(cores[cont] == 25){
+               layer.setStyle({fillColor : cores_mapa[5], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 6
+                `)
+            }
+            else if(cores[cont] == 26){
+               layer.setStyle({fillColor : cores_mapa[26], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 7
+                `)
+            }
+            else if(cores[cont] == 27){
+               layer.setStyle({fillColor : cores_mapa[27], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 8
+                `)
+            }
+            else if(cores[cont] == 28){
+               layer.setStyle({fillColor : cores_mapa[28], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 29
+                `)
+            }
+            else if(cores[cont] == 29){
+               layer.setStyle({fillColor : cores_mapa[29], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 30
+                `)
+            }
+            else if(cores[cont] == 30){
+               layer.setStyle({fillColor : cores_mapa[30], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 31
+                `)
+            }
+            else if(cores[cont] == 31){
+               layer.setStyle({fillColor : cores_mapa[31], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 32
+                `)
+            }
+            else if(cores[cont] == 32){
+               layer.setStyle({fillColor : cores_mapa[32], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 33
+                `)
+            }
+            else if(cores[cont] == 33){
+               layer.setStyle({fillColor : cores_mapa[33], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 34
+                `)
+            }
+            else if(cores[cont] == 34){
+               layer.setStyle({fillColor : cores_mapa[34], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 35
+                `)
+            }
+            else if(cores[cont] == 35){
+               layer.setStyle({fillColor : cores_mapa[35], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 36
+                `)
+            }
+            else if(cores[cont] == 36){
+               layer.setStyle({fillColor : cores_mapa[36], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 37
+                `)
+            }
+            else if(cores[cont] == 37){
+               layer.setStyle({fillColor : cores_mapa[37], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 38
+                `)
+            }
+            else if(cores[cont] == 38){
+               layer.setStyle({fillColor : cores_mapa[38], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 39
+                `)
+            }
+            else if(cores[cont] == 39){
+               layer.setStyle({fillColor : cores_mapa[39], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 40
+                `)
+            }
+            else if(cores[cont] == 40){
+               layer.setStyle({fillColor : cores_mapa[40], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 41
+                `)
+            }
+             else if(cores[cont] == 41){
+               layer.setStyle({fillColor : cores_mapa[41], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 42
+                `)
+            }
+            else if(cores[cont] == 42){
+               layer.setStyle({fillColor : cores_mapa[42], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 43
+                `)
+            }
+            else if(cores[cont] == 43){
+               layer.setStyle({fillColor : cores_mapa[43], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 44
+                `)
+            }
+            else if(cores[cont] == 44){
+               layer.setStyle({fillColor : cores_mapa[44], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 45
+                `)
+            }
+            else if(cores[cont] == 45){
+               layer.setStyle({fillColor : cores_mapa[45], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 46
+                `)
+            }
+            else if(cores[cont] == 46){
+               layer.setStyle({fillColor : cores_mapa[46], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 47
+                `)
+            }
+            else if(cores[cont] == 47){
+               layer.setStyle({fillColor : cores_mapa[47], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 48
+                `)
+            }
+            else if(cores[cont] == 48){
+               layer.setStyle({fillColor : cores_mapa[48], fillOpacity: 1}).bindPopup(`
+                    Cidade: `+feature.properties.name+`
+                    <br>Agrupamento: 49
                 `)
             }
         }
@@ -291,6 +544,12 @@
             */
 
             div.innerHTML += "<h4>Relação Cor e Agrupamento</h4>";
+
+            for(let i=0; i<k; i++) {
+                div.innerHTML += `<i style="background: `+ cores_mapa[i] +`"></i><span>Agrupamento `+ (i+1) +`</span><br>`;
+            }
+
+            /*
             div.innerHTML += '<i style="background: red"></i><span>Agrupamento 01</span><br>';
             div.innerHTML += '<i style="background: green"></i><span>Agrupamento 02</span><br>';
             div.innerHTML += '<i style="background: yellow"></i><span>Agrupamento 03</span><br>';
@@ -340,6 +599,7 @@
             div.innerHTML += '<i style="background: black"></i><span>Agrupamento 46</span><br>';
             div.innerHTML += '<i style="background: blue"></i><span>Agrupamento 47</span><br>';
             div.innerHTML += '<i style="background: brown"></i><span>Agrupamento 48</span><br>';
+            */
 
             div.setAttribute("style", "height:400px; overflow-y: scroll;");
         
