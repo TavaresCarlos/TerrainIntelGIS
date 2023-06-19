@@ -51,8 +51,12 @@ def upload_file():
 
 @app.route('/index', methods = ['POST'])
 def index():
-	return render_template('index.html')
-
+	if "entrar" in request.form:
+		return render_template('index.html')
+	elif "esqueceuSenha" in request.form:
+		return render_template('cadastro.html')
+	elif "cadastro" in request.form:
+		return render_template('cadastro.html')
 
 @app.route('/features', methods = ['GET', 'POST'])
 def upload():

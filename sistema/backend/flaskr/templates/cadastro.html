@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Configuração-->
+    <script src="../static/conf/edit.js"></script>
+
+    <!--Leaflet-->
+    <link rel="stylesheet" href="../static/css/leaflet/leaflet.css" crossorigin="" />
+    <script src="../static/js/leaflet/leaflet.js"></script>
+    <script type="module" src="../static/js/leaflet/leaflet-src.esm.js"></script>
+    <script src="../static/js/leaflet/leaflet-src.js"></script>
+
+    <!--Plotly-->
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js" charset="utf-8"></script>
+
+    <!--Leaflet.EasyButton-->
+    <link rel="stylesheet" href="../static/css/Leaflet.EasyButton/easy-button.css" crossorigin="" />
+    <script src="../static/js/Leaflet.EasyButton/easy-button.js"></script>
+
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="../static/css/bootstrap/bootstrap.css" crossorigin="" />
+    <script type="module" src="../static/js/bootstrap/bootstrap.js"></script>
+    
+    <!--Meu CSS-->
+    <link rel="stylesheet" href="../static/css/global.css"> 
+
+    <!--Gerando PDF com JSPDF via CDNJ-->
+    <script src="../static/js/Leaflet-easyPrint/bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js" integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+
+    <title>Cadastro de Novos Usuários</title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <center><h1>Novo Usuário</h1></center>
+            <div id="formularioCadastro">
+                <form action="" method="POST">
+                    <label for="email">E-mail:</label>
+                    <input type="text" />
+                    <label for="senha">Senha:</label>
+                    <input type="password" />
+
+                    <br />
+                    <br />
+                    <label for="nome">Nome Completo:</label>
+                    <input type="text" id="formularioNome" />
+
+                    <br />
+                    <br />
+                    <input type="submit" value="Cadastrar" name="" class="botaoLogin" />
+                </form>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+</body>
+</html>
