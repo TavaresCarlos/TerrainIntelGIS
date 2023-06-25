@@ -22,7 +22,6 @@ import statistics
 #Libraries and packages to authentication
 #from flask_sqlalchemy import SQLAlchemy
 #import jwt
-import psycopg2
 
 #Libraries and packages to data mining
 from sklearn import preprocessing
@@ -48,6 +47,9 @@ app.config["UPLOAD_FOLDER"] = "static/"
 @app.route('/')
 def upload_file():
 	return render_template('home.html')
+
+#con = mysql.connector.connect(host='mysql26-farm10.kinghost.net',database='webgisbrasil',user='webgisbrasil',password='lineage123')
+
 
 @app.route('/index', methods = ['POST'])
 def index():
