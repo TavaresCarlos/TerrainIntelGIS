@@ -158,7 +158,7 @@
                     x: prop_selec,
                     y: y_label,
                     type: 'heatmap',
-                    showscale: false
+                    showscale: true
                   }]
 
                 const layout = {
@@ -533,8 +533,8 @@
             }
         }
 
-        var mapa_georreferenciado = L.tileLayer.wms('https://geonode.spu.grupozago.com.br/geoserver/geonode/wms?', {
-            layers: 'geonode:BHRP_raster',
+        var mapa_georreferenciado = L.tileLayer.wms('https://stable.demo.geonode.org/geoserver/geonode//wms?', {
+            layers: 'geonode:bhrp_raster_e450cb6c5ee3814e413f1f5ada65896d',
             format: 'image/png',
             transparent: true,
         })
