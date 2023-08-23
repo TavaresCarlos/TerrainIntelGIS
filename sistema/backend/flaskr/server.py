@@ -18,6 +18,7 @@ import pandas as pd
 import numpy as np
 import json
 import statistics
+import math
 
 #Libraries and packages to authentication
 #from flask_sqlalchemy import SQLAlchemy
@@ -126,7 +127,6 @@ def save_file():
 
 		array_cluster_cities = cluster_cities_generate(number_k, cities_name, cluster[0])
 		array_cluster_properties = cluster_properties_generate(number_k, file_float_tratament, cluster[0])
-		array_cluster_statistics = cluster_statistics_generate(number_k, array_cluster_properties)
 
 		
 		#GRÁFICO LATERAL: GRÁFICO X E Y COM OS CLUSTERS GERADOS APÓS O PCA
@@ -141,7 +141,6 @@ def save_file():
 			"nome_cidades": cities_name,
 			"cidades_agrupamentos": list(array_cluster_cities),
 			"valores_brutos": array_cluster_properties,
-			"est": array_cluster_statistics,
 			"propriedades_selecionadas": list(features_selecteds)
 		}
 
@@ -255,41 +254,61 @@ def get_cities_name(training_file):
 
 	return names
 
-#Define the ideal k value
-#Use the Silhouette Score for determine the intra-cluster distance
+def distanciaRetaPontos(diferencas):
+	dist = []
+
+	#Calculo da reta
+	x0 = diferencas[0][0]
+	y0 = diferencas[0][1]
+
+	x1 = diferencas[len(diferencas)-1][0]
+	y1 = diferencas[len(diferencas)-1][1]
+
+	for i in diferencas:
+		aux = []
+		x = i[0]
+		y = i[1]
+
+		numerador = abs((y1-y0)*x - (x1-x0)*y - y1*x0)
+		denominador = math.sqrt((y1-y0)**2 + (x1-x0)**2)
+		d = numerador/denominador
+		aux.append(x)
+		aux.append(y)
+		dist.append(aux)
+
+	maior = sorted(dist, key=lambda d: d[1], reverse=True)
+
+	return maior[0]
+
 def defining_k_value(file):
-	values_silhouette_scores = []
+	quantidade = 2
+	valores = []
 
-	for i in range(2,15):
-		#Use k-means auxiliary 
-	    km = KMeans(n_clusters = i, random_state = 42, init = 'k-means++')
-	    km.fit_predict(file)
-	    score = silhouette_score(file, km.labels_, metric='euclidean')
-	    
-	    #Store the k value used in this iteraction and the score calculated
-	    x = []
-	    x.append(i)
-	    x.append(score)
-	    values_silhouette_scores.append(x)
+	for vez in range(quantidade):
+		inicio = 2
+		fim = 10
+		inercia = []
 
-	cont = 2
-	variation = []
+		for i in range(inicio, fim):
+			kmeans = KMeans(n_clusters = i)
+			kmeans.fit(file)
+			inercia.append(kmeans.inertia_)
 
-	for i in range(len(values_silhouette_scores)+1):
-	    if i+1 < len(values_silhouette_scores):
-	        delta = []
-	        cont = cont + 1
-	        delta.append(cont)
+		diferente = []
+		for j in range(2, len(inercia)):
+			if j+1 != len(inercia):
+				t = []
+				m = inercia[j] - inercia[j+1]
+				t.append(j+1)
+				t.append(m)
+				diferente.append(t)
 
-	        #Variation between of score values from i+1 and i
-	        delta.append(values_silhouette_scores[i][1] - values_silhouette_scores[i+1][1])
-	        variation.append(delta) 
-	
-	#Order this array decrescent using the variation defining
-	valueK = sorted(variation, key=lambda variation: variation[1], reverse=True)
-	
-	#Return only the k value
-	return valueK[0][0]
+		k = distanciaRetaPontos(diferente)
+
+		valorK = k
+		valores.append(valorK[0])
+
+	return statistics.mode(valores)
 
 def tratamento_dados_categoricos(df_2):
 	#Modificando colunas string para número
