@@ -4,7 +4,7 @@ WORKDIR /backend
 
 COPY . /backend
 
-RUN bash ./flaskr/backend.sh
+RUN pip install -r requirements.txt
 
 EXPOSE 3000
 
