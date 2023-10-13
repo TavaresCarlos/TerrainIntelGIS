@@ -9,4 +9,4 @@ RUN pip install -r requirements.txt
 # Expor a porta em que o aplicativo é executado
 EXPOSE 3000
 # Comando para iniciar o aplicativo
-CMD ["python", "./flaskr/server.py"]
+CMD ["python", "server.py"]
