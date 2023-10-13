@@ -96,7 +96,9 @@
                             <button class="nav-link active" onclick="gerarPDF()">Gerar Relatório PDF</button>
                         </li>
                       </ul>
-                      <button class="btn btn-outline-success">Logout</button>
+                        <form action="/logout" method="POST">
+                            <button class="btn btn-outline-success" type="submit">Logout</button>
+                        </form>
                     </div>
                 </div>
             </nav>

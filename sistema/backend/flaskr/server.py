@@ -19,6 +19,7 @@ import numpy as np
 import json
 import statistics
 import math
+import mysql.connector
 
 #Libraries and packages to authentication
 #from flask_sqlalchemy import SQLAlchemy
@@ -49,13 +50,42 @@ app.config["UPLOAD_FOLDER"] = "static/"
 def upload_file():
 	return render_template('home.html')
 
-#con = mysql.connector.connect(host='mysql26-farm10.kinghost.net',database='webgisbrasil',user='webgisbrasil',password='lineage123')
-
-
 @app.route('/index', methods = ['POST'])
 def index():
+	conexao = mysql.connector.connect(
+	    host="mysql26-farm10.kinghost.net",
+	    user="webgisbrasil",
+	    password="lineage123",
+	    database="webgisbrasil"
+	)
+
+	login = request.form['email']
+	senha = request.form['senha']
+
+	cursor = conexao.cursor()
+
+	n = ''
+	s = ''
+	e = ''
+
+	if cursor:
+	    selecionar = "SELECT name, senha, email FROM user WHERE email = %s" 
+	    dados = (login)
+
+	    cursor.execute(selecionar, (dados,))
+	    resultados = cursor.fetchall()
+
+	    for linha in resultados:
+	    	n, s, e = linha
+
+	cursor.close()
+	conexao.close()
+
 	if "entrar" in request.form:
-		return render_template('index.html')
+		if e == login and s == senha:
+			return render_template('index.html')
+		else:
+			return render_template('home.html')
 	elif "esqueceuSenha" in request.form:
 		return render_template('cadastro.html')
 	elif "cadastro" in request.form:
@@ -160,7 +190,37 @@ def gerarRelatorio():
 
 	return "ok"
 
-#
+@app.route('/cadastro', methods = ['POST'])
+def cadastro():
+	conexao = mysql.connector.connect(
+	    host="mysql26-farm10.kinghost.net",
+	    user="webgisbrasil",
+	    password="lineage123",
+	    database="webgisbrasil"
+	)
+
+	nome = request.form['nome']
+	email = request.form['email']
+	senha = request.form['senha']
+
+	cursor = conexao.cursor()
+
+	if cursor:
+	    inserir = "INSERT INTO user (name, email, senha) VALUES (%s, %s, %s)"
+	    dados = (nome, email, senha)
+
+	    cursor.execute(inserir, dados)
+	    conexao.commit()
+
+	cursor.close()
+	conexao.close()
+
+	return render_template('cadastro.html')
+
+@app.route('/logout', methods = ['POST'])
+def sair():
+	return render_template('home.html')
+
 def cluster_statistics_generate(number_k, array_cluster_properties):
 	array_cluster = []
 
@@ -236,11 +296,6 @@ def float_tratament(list_of_features):
 
 	return change_matrix
 
-'''
-#Clustering algorithms
-def k_means():
-def affinity_propagation:
-'''
 
 #Função que retorna o ponto central de todos os municípios do arquivo de treinamento
 def map_municipio_cluster(nome_municipios, cluster):
@@ -355,8 +410,11 @@ def k_means(file, number_k):
 	#Agrupamento com os dados normalizados
 	file_norm = minmax_scale(file)
 	kmeans_norm = KMeans(n_clusters = number_k, random_state = 0)
-	cluster_norm = kmeans_norm.fit_predict(file_norm )
-	centroid_minmax = kmeans_norm.cluster_centers_
+	cluster_norm = kmeans_norm.fit_predict(file_norm)
+	
+	#centroid_minmax = kmeans_norm.cluster_centers_
+
+	centroid_minmax = minmax_scale(centroide)
 
 	return list(cluster), centroide, centroid_minmax
 
