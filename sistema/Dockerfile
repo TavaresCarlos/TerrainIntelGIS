@@ -4,7 +4,7 @@ WORKDIR /backend
 
 COPY . /backend
 
-RUN bash ./backend.sh
+RUN bash ./flaskr/backend.sh
 
 EXPOSE 3000
 
