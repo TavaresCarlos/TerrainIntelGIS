@@ -5,6 +5,7 @@
 <ol>
   <li>Arquitetura</li>
   <li>Tecnologias Utilizadas</li>
+  <li>Artigos Gerados</li>
 </ol>
 
 
@@ -29,4 +30,9 @@
   <li>GeoServer</li>
   <li>Docker</li>
   <li>Postgres</li>
+  <li>MySQL</li>
 </ol>
+
+<h3>Artigos Gerados</h3>
+<p><a href="https://www.researchgate.net/publication/366988517_Uma_Metodologia_para_Apoio_a_Tomada_de_Decisao_em_Cenarios_de_Desastres_Ambientais_Utilizando_Dados_Publicos">Brumatti, C. H. T., Schaefer, M. A. R., Lisboa Filho, J., & Reis, J. C. (2022). Uma metodologia para apoio à tomada de decisão em cenários de desastres ambientais utilizando dados públicos. In GEOINFO (pp. 329-334).</a></p>
+<p><a href="https://www.researchgate.net/publication/374409195_TerrainIntelGis_A_Geographic_Intelligence_System_to_Support_Decision-Making_in_Environmental_and_Natural_Disaster_Scenarios">Brumatti, C. H., Schaefer, M., Villela, M. L. B., Lisboa-Filho, J., & Reis, J. C. (2023, October). TerrainIntelGis: A Geographic Intelligence System to Support Decision-Making in Environmental and Natural Disaster Scenarios. In Anais Estendidos do XXIX Simpósio Brasileiro de Sistemas Multimídia e Web (pp. 89-92). SBC.</a></p>
