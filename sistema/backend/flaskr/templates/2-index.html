@@ -34,7 +34,7 @@
     <title>Mapa</title>
 
 </head>
-<body style="background-color: #D0E7BB;">
+<body>
     <div id="app">
         <div class="row">
             <div class="col-12">
@@ -61,34 +61,31 @@
             <div class="col-md-4"></div>
             <div class="col-md-4" id="upload">
                 <div>
-                    <p><strong><h6>Configuração do Sistema</h6></strong></p>
+                    <p><strong><h6>Upload do arquivo .csv</h6></strong></p>
                 </div>
 
                 <div>
                     <p>Ícones</p>
-                </div> 
-                
+                </div>     
                 <form action = "/features" method = "POST" enctype = "multipart/form-data">
-                    <label class="mr-sm-2" for="informarK">Deseja Informar o Número de Agrupamentos?
-                        <select @change="mostrar = !mostrar" name="informarK" class="form-select form-select-sm form-control" >
-                            <option value="sim">Sim</option>
-                            <option value="nao">Não</option>
-                        </select>
-                    </label>
-                    <br/><br/>
-
+                    <label for="informarK">Informar o número de agrupamentos?</label>
+                    <select @change="mostrar = !mostrar" name="informarK">
+                      <option value="sim">Sim</option>
+                      <option value="nao">Não</option>
+                    </select>
+                    <br/><br />
+                    
                     <div v-if="mostrar">
                         <label for="valorK">Digite o valor:</label>
                         <input type="number" name="valorK"/>
                     </div>
 
-                    <br/>
+                    <br/><br />
                     <input type = "file" name = "file" />
-                    <p>*Upload de arquivos somente no formato csv</p>
-                    <br>
+                    <br><br>
                     <input type = "submit"/>
+                    <input type = "reset"/>
                 </form> 
-
             </div>
             <div class="col-md-4"></div>
         </div>

@@ -5,7 +5,7 @@
 <ol>
   <li>Arquitetura</li>
   <li>Tecnologias Utilizadas</li>
-  <li>Artigos Gerados</li>
+  <li>Trabalhos Gerados</li>
 </ol>
 
 
@@ -32,6 +32,16 @@
   <li>Postgres</li>
   <li>MySQL</li>
 </ol>
+
+<h4>Instalação</h4>
+<p>Para instalação do sistema é necessário ter o aplicativo Docker instalado.</p>
+<p>Sendo assim, basta ir ao diretório "sistema/", onde está localizado o arquivo docker-compose.yml e dar o seguinte comando "docker-compose up". Com isso, 
+será feito a instalação do Módulo 02 da aplicação. A configuração e instalação do Módulo 01 deverá ser feita na rede local do usuário.
+</p>
+
+<h4>Imagens do Sistema</h4>
+<img src="./imagens-gerais/v1.png">
+<img src="./imagens-gerais/v2.JPG">
 
 <h3>Artigos Gerados</h3>
 <p><a href="https://www.researchgate.net/publication/366988517_Uma_Metodologia_para_Apoio_a_Tomada_de_Decisao_em_Cenarios_de_Desastres_Ambientais_Utilizando_Dados_Publicos">Brumatti, C. H. T., Schaefer, M. A. R., Lisboa Filho, J., & Reis, J. C. (2022). Uma metodologia para apoio à tomada de decisão em cenários de desastres ambientais utilizando dados públicos. In GEOINFO (pp. 329-334).</a></p>
