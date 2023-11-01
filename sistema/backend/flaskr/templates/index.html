@@ -78,15 +78,18 @@
                     <br/><br/>
 
                     <div v-if="mostrar">
-                        <label for="valorK">Digite o valor:</label>
-                        <input type="number" name="valorK"/>
+                        <label class="mr-sm-2" for="valorK">Digite o valor:
+                        <input class="form-control form-control-sm" type="number" name="valorK" placeholder="Valor de K" aria-label=".form-control-sm example">
+                        </select>
+                    </label>
                     </div>
 
                     <br/>
                     <input type = "file" name = "file" />
                     <p>*Upload de arquivos somente no formato csv</p>
                     <br>
-                    <input type = "submit"/>
+                    <button class="btn btn-primary btn-sm" type="submit" name="entrar" class="botaoLogin">Fazer a Consulta</button>
+
                 </form> 
 
             </div>

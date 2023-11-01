@@ -31,7 +31,7 @@
     <title>Mapa</title>
 
 </head>
-<body>
+<body style="background-color: #D0E7BB;">
     <div class="row">
         <div class="col-12">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -57,12 +57,11 @@
         <div class="col-md-4" id="upload">
             <p>Escolha quais serão os atributos utilizados para o agrupamento dos dados:</p>
 			<form action="/display" method = "POST">
-
-				{% for attr in content %}
-				<input type="checkbox" id='{{attr}}' name='{{attr}}' value='{{attr}}'>
-					<label for='{{attr}}'>{{attr}}</label><br>
+                {% for attr in content %}
+				    <input class="form-check-input" type="checkbox" id='{{attr}}' name='{{attr}}' value='{{attr}}'>
+                      <label class="form-check-label" for='{{attr}}'>{{attr}}</label><br>
 				{% endfor %}
-				<input type="submit" value="Submit">
+                <button class="btn btn-primary btn-sm" type="submit" class="botaoLogin">Enviar</button>
 			</form>
         </div>
         <div class="col-md-4"></div>

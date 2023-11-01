@@ -118,8 +118,11 @@ def upload():
 		global dicts
 
 		dicts = arquivo.to_dict()
+		arquivo = list(arquivo)
+		arquivo = arquivo[1:]
+		arquivo = sorted(arquivo)
 
-		return render_template('features.html', content=dicts)
+		return render_template('features.html', content=arquivo)
 		
 		#File to tests
 		#return render_template('treinamento.html', content=str(arquivo))
