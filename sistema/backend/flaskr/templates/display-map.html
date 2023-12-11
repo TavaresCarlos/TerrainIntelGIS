@@ -555,7 +555,7 @@
 
 
         //Controlador das camadas-bases e overlayer
-        var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+        var layerControl = L.control.layers(baseMaps, overlayMaps, { collapsed:false }).addTo(map);
 
         //Barra de escala
         L.control.scale({
